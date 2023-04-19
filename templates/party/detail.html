@@ -1,0 +1,269 @@
+{% extends 'party/base.html' %}
+{% load app %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block titletext %}{{ p.title }} | {{ block.super }}{% endblock %}
+{% block og_titletext %}{{ p.title }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_description %}{{ p.text|truncatechars:30 }}{% endblock %}
+{% block og_image %}{{ block.super }}{% url 'party:party_img_shortcut_ogp_ja_zh' party_id=p.party_id lang='ja' ext='png' %}{% endblock %}
+{% block og_twittercard %}photo{% endblock %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'party/css/detail.css' %}" type="text/css">
+<script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+{% endblock %}
+
+{% block content %}
+<article id="detail" data-party_id="{{ p.party_id }}" data-party="{{ p.id }}">
+  <section id="top">
+    <div class="pageTitle">{{ p.title }}</div>
+    <div class="partyImage"><img src="{% url 'party:party_img_shortcut_ja_zh' party_id=p.party_id lang='ja' ext='jpg' %}"></div>
+    <div>
+      <div id="functionButtons">
+        <a href="https://twitter.com/intent/tweet?text={{ p.title|urlencode }}%7C%E3%83%AF%E3%83%BC%E3%83%95%E3%83%AA%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3%E3%83%95%E3%82%A1%E3%82%A4%E3%83%B3%E3%83%80%E3%83%BC&url={{ request.build_absolute_uri }}&hashtags=%E3%83%AF%E3%83%BC%E3%83%95%E3%83%AA&via=WFPartyFinder" target="_blank"><div id="btnTwitter" class="functionWrap"><div class="icon--twitter"></div></div></a>
+        <div id="btnCopyURL" class="functionWrap"><div class="icon--copy"></div></div>
+        <div id="btnCopyIMG" class="functionWrap"><div class="icon--copyimg"></div></div>
+        {% if p.party_code != "" %}
+        <div id="btnCopyPartyCode" class="functionWrap"><div class="icon--copypartycode"></div></div>
+        {% endif %}
+        {% if request.session.session_key == p.session_key %}
+        <a href="/{{ p.party_id }}/edit"><div class="functionWrap"><div class="icon--edit"></div></div></a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <section id="overview">
+    <div class="overviewwrap">
+      <div class="attributewrap">
+        {% for a in p.attribute.all %}{{ a }}{% endfor %}
+      </div>
+      <div class="pfwrap">
+        {{ p.member_set.all.0.unit.role }}パワフリ
+      </div>
+      <div class="datewrap">
+        {{ p.date_added }}
+      </div>
+    </div>
+  </section>
+  <hr>
+  <section id="quest">
+    <label>クエスト投票・タグ</label>
+    <span><ul class="selectList">
+      {% for poll in polls %}
+      <li class="questli questBox"><div id="poll-{{ poll.party }}-{{ poll.quest__pk }}" class="questWrap">
+        <a href="{% url 'party:search' %}?quest_ids={{ poll.quest__pk }}#searchResult">{{ poll.quest__enemy__short_desc_jp }} {{ poll.quest__difficulty__short_desc_jp }}</a>
+        <div class="icon--useful{% if poll.my_cnt %} isUseful{% endif %}"></div>
+        <div class="useful_cnt">x{{poll.poll_cnt}}</div>
+      </div></li>
+      {% endfor %}
+      <li class="plusli"><div id="btn_quest_plus" class="btn ready questBox">投票先を追加</div></li>
+      <li class="selectli questBox inactive">
+        <form id="form_quest">
+          <div class="questWrap{% if q.non_field_errors %} alertwrap{% endif %}">
+            <div class="selectwrap enemy">
+              <select name="form-0-enemy" class="form-control form-enemy" id="id_form-0-enemy">
+                <option value="" selected="">敵を選択</option>
+                {% for e in enemies %}
+                  {% if forloop.first %}
+                    <optgroup label="{{ e.group_desc_jp }}">
+                  {% else %}
+                    {% ifchanged e.group_desc_jp %}</optgroup><optgroup label="{{ e.group_desc_jp }}">{% endifchanged %}
+                  {% endif %}
+                  <option value="{{ e.id }}">{{ e.desc_jp }}</option>
+                {% endfor %}
+                </optgroup>
+              </select>
+            </div>
+            <div class="selectwrap difficulty inactive">
+              <select name="form-0-difficulty" class="form-control form-difficulty" id="id_form-0-difficulty">
+                <option value="" selected="">----</option>
+                <option value="1">チャレンジシングルバトル 地獄級</option>
+              </select>
+            </div>
+          </div>
+          <div id="btn_quest_poll" class="btn ready">追加</div>
+        </form>
+      </li>
+    </ul></span>
+  </section>
+  <section id="tag">
+    <span><ul class="selectList">
+      {% for t in p.tag.all %}
+      <li class="tagli tagBox">
+        <div class="tagwrap">
+          <a href="{% url 'party:search' %}?tag_descs={{ t }}#searchResult">#{{ t }}</a>
+          <div class="icon--cross inactive"></div>
+        </div>
+      </li>
+      {% endfor %}
+      <li id="tagformli" class="tagBox inactive">
+        <form id="form_tag">
+          <div class="tagwrap">
+            <input type="text" id="input_tag" class="form-control" name="input_tag" autocomplete="on" list="tags" maxlength="30" placeholder="新規タグを入力">
+            <datalist id="tags">
+              {% for t in exist_tags %}
+              <option value="{{ t.desc }}">
+              {% endfor %}
+            </datalist>
+          </div>
+          <div id="btn_tag_preadd" class="btn ready">追加</div>
+        </form>
+      </li>
+      <li class="tagbtneditli">
+        <div id="btn_tag_edit" class="btn ready tagBox">タグ編集</div>
+      </li>
+      <li class="tagbtnsendli inactive">
+        <div id="btn_tag_send" class="btn ready inactive tagBox">完了</div>
+        <div id="btn_tag_cancel" class="btn ready inactive tagBox">キャンセル</div>
+      </li>
+    </ul></span>
+  </section>
+  <hr>
+  <section id="text">
+    <label>メモ</label>
+    <div class="markdown-body editormd-preview-container" id=memo_text>{{ p.text|markdown|safe }}</div>
+  </section>
+  <hr>
+  {% if p.url %}
+  <section id="url">
+    <label>参考リンク</label>
+    <a href="{{ p.url }}">{{ p.url }}</a>
+    <div id="tweetWrap"></div>
+  </section>
+  <hr>
+  {% endif %}
+  <section id="abiStatus">
+    <label>必須マナボ2</label>
+    <table id="abiStatusTable">
+      <tbody>
+        <tr>
+          <th></th>
+          <th class="rowHeader abi4">④</th>
+          <th class="rowHeader abi5">⑤</th>
+          <th class="rowHeader abi6">⑥</th>
+        </tr>
+        {% if abi_status|length_is:"6" %}
+          {% for abis in abi_status %}
+          <tr>
+            <td class="colHeader"><img src="{% unit_image_src STATIC_PREFIX p.party_text|split_party_text:forloop.counter0 'Char' 'normal' %}"></td>
+            <td class="colData abi4"><div class="abiVal v{{ abis.0 }}"></div></td>
+            <td class="colData abi5"><div class="abiVal v{{ abis.1 }}"></div></td>
+            <td class="colData abi6"><div class="abiVal v{{ abis.2 }}"></div></td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          {% for _ in ''|center:6 %}
+          <tr>
+            <td class="colHeader"><img src="{% unit_image_src STATIC_PREFIX p.party_text|split_party_text:forloop.counter0 'Char' 'normal' %}"></td>
+            <td class="colData abi4"><div class="abiVal v-1"></div></td>
+            <td class="colData abi5"><div class="abiVal v-1"></div></td>
+            <td class="colData abi6"><div class="abiVal v-1"></div></td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </section>
+  <hr>
+  <section id="moreDetail">
+    <label>詳細</label>
+    <table id="detailTable">
+      <tbody>
+        <tr>
+          <td class="col_header">登録日</td>
+          <td class="col_data">{{ p.date_added }}</td>
+        </tr>
+        <tr>
+          <td class="col_header">パーティコード</td>
+          <td id="tdPartyCode" class="col_data">{{ p.party_code }}</td>
+        </tr>
+        <tr>
+          <td class="col_header">パワーフリップ</td>
+          <td class="col_data">{{ p.member_set.all.0.unit.role }}</td>
+        </tr>
+        {% for m in p.member_set.all %}
+        <tr>
+          <td class="col_header">{{ m.party_role.desc_jp }}</td>
+          <td class="col_data">{{ m.unit }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <hr>
+  <section id="comment">
+    <label>コメント</label>
+    <span>
+      <form id="comment_form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ comment_form.text }}
+        <div class="markdown-body editormd-preview-container" id=memo_text></div>
+        <div class="btn_submit"><button type="submit" class="btn btn-primary">書き込む</button></div>
+      </form>
+      <ul id="comment_list">
+        {% for c in p.comment_set.all %}
+        <li class="commentli">
+          <div class="comment_header">
+            <div class="comment_no">{{ forloop.counter }}.</div>
+            <div class="comment_date">{{ c.date_posted }}</div>
+          </div>
+          <div class="comment_text">{{ c.text|linebreaksbr }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </span>
+  </section>
+</article>
+{% endblock %}
+
+{% block extrajs %}
+  <script>
+    const enemies = {
+      {% for e in enemies %}
+        '{{ e.pk }}': {
+          'desc_jp': '{{ e.desc_jp }}',
+          'short_desc_jp': '{{ e.short_desc_jp }}',
+          'group_desc_jp': '{{ e.group_desc_jp }}',
+          'difficulties': [
+            {% for q in e.quest_set.all %}
+              {
+                'quest_id': '{{ q.id }}',
+                'pk': '{{ q.difficulty.pk }}',
+                'desc_jp': '{{ q.difficulty.desc_jp }}',
+                'short_desc_jp': '{{ q.difficulty.short_desc_jp }}',
+                'group_desc_jp': '{{ q.difficulty.group_desc_jp }}'
+              },
+            {% endfor %}
+        ]},
+      {% endfor %}
+    };
+  </script>
+  <script src="{% static 'party/js/ecrire_detail.js' %}"></script>
+  <script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/raphael.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/underscore.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/sequence-diagram.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/jquery.flowchart.min.js' %}"></script>
+  <script>
+    $(function () {
+        editormd.markdownToHTML("memo_text", {
+            emoji           : true,
+            taskList        : true,
+            tex             : true,
+            flowChart       : true,
+            sequenceDiagram : true,
+        });
+        $(".reference-link").each(function (i,obj) {
+          console.log(obj)
+        })
+    })
+  </script>
+{% endblock %}

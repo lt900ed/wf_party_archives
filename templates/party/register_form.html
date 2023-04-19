@@ -1,0 +1,294 @@
+{% extends 'party/base.html' %}
+{% load app %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block titletext %}パーティ情報{% if edit %}修正{% else %}登録{% endif %}フォーム | {{ block.super }}{% endblock %}
+{% block og_titletext %}パーティ情報{% if edit %}修正{% else %}登録{% endif %}フォーム{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_description %}{{ block.super }}{% endblock %}
+{% block og_image %}{{ block.super }}{{ STATIC_PREFIX }}root/img/favicon/android-icon-192x192.png{% endblock %}
+{% block og_twittercard %}{{ block.super }}{% endblock %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.css' %}" type="text/css">
+{% endblock %}
+
+{% block popup %}
+<div id="selectChar" class="popupBase">
+  <a href="#!" class="popupUnshown"></a>
+  <div class="popupContent scrollable">
+    <div class="popWrap withPopFooter">
+      <h3 id="charListHeader">リーダーを選択</h3>
+      <ul class="charList">
+      </ul>
+      <div class="popFooter">
+        <div class="btn weak ready popFooterBtn">編成からはずす</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="selectEquip" class="popupBase">
+  <a href="#!" class="popupUnshown"></a>
+  <div class="popupContent scrollable">
+    <div class="popWrap withPopFooter">
+      <h3 id="equipListHeader">リーダー装備を選択</h3>
+      <ul class="equipList">
+      </ul>
+      <div class="popFooter">
+        <div class="btn weak ready popFooterBtn">編成からはずす</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<article id="form">
+  <div class="pageTitle">パーティ情報{% if edit %}修正{% else %}登録{% endif %}</div>
+  <form id="inputarea" action="" method="post" enctype="multipart/form-data">
+    <section id="form_member">
+      <label>パーティ編成</label>
+      <span class="helptext">編成を修正したい場合は修正したいキャラ・装備をタップ</span>
+      <div class="alertBox">
+        {% if form.non_field_errors %}
+          <p>{{ form.non_field_errors }}</p>
+        {% endif %}
+        {% if form.party_text.errors %}
+          <p>{{ form.party_text.errors }}</p>
+        {% endif %}
+      </div>
+      <div id="planner" class="plannerWrapper">
+        <div id="unisons">
+          <ul id="unison1" class="unison">
+            <li class="unit char main" data-party_role_desc_jp="リーダー" data-unit_id="{{ form.party_text.value|split_party_text:0 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:0 'Char' 'normal' %}"></li>
+            <li class="unit equip weapon" data-party_role_desc_jp="リーダー装備" data-unit_id="{{ form.party_text.value|split_party_text:6 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:6 'Equip' 'weapon' %}"></li>
+            <li class="unit char sub" data-party_role_desc_jp="リーダーユニゾン" data-unit_id="{{ form.party_text.value|split_party_text:1 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:1 'Char' 'normal' %}"></li>
+            <li class="unit equip soul" data-party_role_desc_jp="リーダーアビリティソウル" data-unit_id="{{ form.party_text.value|split_party_text:7 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:7 'Equip' 'soul' %}"></li>
+          </ul>
+          <ul id="unison2" class="unison">
+            <li class="unit char main" data-party_role_desc_jp="メイン2人目" data-unit_id="{{ form.party_text.value|split_party_text:2 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:2 'Char' 'normal' %}"></li>
+            <li class="unit equip weapon" data-party_role_desc_jp="2人目装備" data-unit_id="{{ form.party_text.value|split_party_text:8 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:8 'Equip' 'weapon' %}"></li>
+            <li class="unit char sub" data-party_role_desc_jp="ユニゾン2人目" data-unit_id="{{ form.party_text.value|split_party_text:3 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:3 'Char' 'normal' %}"></li>
+            <li class="unit equip soul" data-party_role_desc_jp="2人目アビリティソウル" data-unit_id="{{ form.party_text.value|split_party_text:9 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:9 'Equip' 'soul' %}"></li>
+          </ul>
+          <ul id="unison3" class="unison">
+            <li class="unit char main" data-party_role_desc_jp="メイン3人目" data-unit_id="{{ form.party_text.value|split_party_text:4 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:4 'Char' 'normal' %}"></li>
+            <li class="unit equip weapon" data-party_role_desc_jp="3人目装備" data-unit_id="{{ form.party_text.value|split_party_text:10 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:10 'Equip' 'weapon' %}"></li>
+            <li class="unit char sub" data-party_role_desc_jp="ユニゾン3人目" data-unit_id="{{ form.party_text.value|split_party_text:5 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:5 'Char' 'normal' %}"></li>
+            <li class="unit equip soul" data-party_role_desc_jp="3人目アビリティソウル" data-unit_id="{{ form.party_text.value|split_party_text:11 }}"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:11 'Equip' 'soul' %}"></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    {% if dr %}
+    <section id="form_detect_result">
+      <label>解析スクリーンショット</label>
+      <div class="partyImage"><img src="data:image/jpeg;base64,{{ dr.np_src_image_for_confirm }}"></div>
+    </section>
+    {% endif %}
+    {{ form.detect_result_id }}
+    {{ form.party_text }}
+    <section id="form_title">
+      <label>パーティ名</label>
+      <div class="alertBox">
+        {{ form.title.errors }}
+      </div>
+      <span class="helptext">{{ form.title.help_text }}</span>
+      {{ form.title }}
+    </section>
+    <section id="form_party_code">
+      <label>パーティコード</label>
+      <span class="helptext">{{ form.party_code.help_text }}</span>
+      {{ form.party_code }}
+    </section>
+    <section id="form_text">
+      <label>メモ</label>
+      <div class="alertBox">
+        {{ form.text.errors }}
+      </div>
+      <div class="btn_submit">
+        <button type="button" class="btn btn-secondary" id="showPreviewText">マークダウンのプレビューを表示</button>
+      </div>
+      <span class="helptext">{{ form.text.help_text }}</span>
+      {{ form.text }}
+    </section>
+    <section id="preview_text" class="hidden">
+      <label>メモプレビュー</label>
+      <div class="btn_submit">
+        <button type="button" class="btn btn-secondary" id="hidePreviewText">メモ入力画面に戻る</button>
+      </div>
+      <div class="markdown-body editormd-preview-container" id=memo_text>{{ form.text.value|markdown|safe }}</div>
+    </section>
+    <section id="form_url">
+      <label>参考URL</label>
+      <div class="alertBox">
+        {{ form.url.errors }}
+      </div>
+      <span class="helptext">{{ form.url.help_text }}</span>
+      {{ form.url }}
+    </section>
+    <section id="form_quest">
+      <label>有効なクエスト</label>
+      {% if edit %}
+      <span class="helptext">詳細ページで修正して下さい。</span>
+      {% else %}
+      <div class="alertBox">
+        {% for q in questformset %}
+          {% if q.non_field_errors %}
+            {% for e in q.non_field_errors %}{{e}}<br>{% endfor %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="virtualBox">
+        {{ questformset.management_form }}
+        <ul class="selectList">
+          {% for q in questformset %}
+          <li class="selectli{% if forloop.counter0 > 0 and not q.enemy.value %} inactive{% endif %}">
+            <div class="questWrap{% if q.non_field_errors %} alertwrap{% endif %}">
+              <div class="selectwrap enemy">{{ q.enemy }}</div>
+              <div class="selectwrap difficulty{% if not q.enemy.value %} inactive{% endif %}">{{ q.difficulty }}</div>
+            </div>
+          </li>
+          {% endfor %}
+          <li><div class="icon icon--minus"><span class="icon__mark"></span></div></li>
+          <li><div class="icon icon--plus"><span class="icon__mark"></span></div></li>
+        </ul>
+      </div>
+      {% endif %}
+    </section>
+    <section id="form_tags">
+      <label>タグ</label>
+      {% if edit %}
+      <span class="helptext">詳細ページで修正して下さい。</span>
+      {% else %}
+      <div class="alertBox">
+        {{ form.tags.errors }}
+      </div>
+      <span class="helptext">{{ form.tags.help_text }}</span>
+      {{ form.tags }}
+      <div class="virtualBox">
+        <ul class="tagList">
+          {% for t in exist_tags %}
+          <li class="Tagli" data-tag_desc="{{ t.desc }}">
+            <div class="tagWrap">#{{ t.desc }}({{ t.p_cnt }})</div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </section>
+    <section id="form_abi_status">
+      <label>必須マナボ2</label>
+      <div class="alertBox">
+        {{ form.ability_status.errors }}
+      </div>
+      <span class="helptext">{{ form.ability_status.help_text }}</span>
+      {{ form.ability_status }}
+      <table id="abiStatusTable">
+        <tbody>
+          <tr>
+            <th id="abiValReset">リセット</th>
+            <th class="rowHeader abi4">④</th>
+            <th class="rowHeader abi5">⑤</th>
+            <th class="rowHeader abi6">⑥</th>
+          </tr>
+          {% for _ in ''|center:6 %}
+          <tr>
+            <td class="colHeader"><img src="{% unit_image_src STATIC_PREFIX form.party_text.value|split_party_text:forloop.counter0 'Char' 'normal' %}"></td>
+            <td class="colData abi4"><div class="abiVal v0"></div></td>
+            <td class="colData abi5"><div class="abiVal v0"></div></td>
+            <td class="colData abi6"><div class="abiVal v0"></div></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+    <section id="caution_info">
+      <label>投稿後の注意事項</label>
+      <p class="helptext">
+        パーティ投稿後も同一端末・同一ブラウザからであれば編成・説明文等の修正が行えます。パーティ詳細ページに表示される編集ボタンから修正してください。<br>
+        ブラウザのCookieを削除すると修正できなくなります。修正を希望される場合は<a href="https://twitter.com/WFPartyFinder" target="_blank" rel="noopener">@WFpartyFinder</a>までご連絡下さい。本人確認の上で対応させて頂きます。
+      </p>
+      <p class="helptext">
+        現時点で投稿者自身の操作による投稿パーティの削除はできません。削除を希望される場合も<a href="https://twitter.com/WFPartyFinder" target="_blank" rel="noopener">@WFpartyFinder</a>までご連絡下さい。
+      </p>
+    </section>
+
+    {% csrf_token %}
+    <div class="btn_submit">
+      <button type="submit" class="btn btn-primary">　　登録　　</button>
+      {% if edit %}
+      <button type="button" class="btn btn-secondary" onclick="location.href='{{ request.path|one_level_up }}'">キャンセル</button>
+      {% else %}
+      <button type="button" class="btn btn-secondary" onclick="location.href='/'">キャンセル</button>
+      {% endif %}
+    </div>
+  </form>
+</article>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+  const exist_chars = [
+    {% for char in exist_chars %}
+    {% with index=forloop.counter0 %}
+    {% if 0 < index %},{% endif %}
+    {% endwith %}
+    {
+      'unit_id': '{{ char.unit_id }}',
+      'attribute_desc': '{{ char.attribute__desc }}',
+      'img_src': '{{ STATIC_PREFIX }}root/img/chars/{{ char.unit_id }}/square_0.png',
+      'rarity': {{ char.rarity }}
+    }
+    {% endfor %}
+  ];
+  const exist_equips = [
+    {% for equip in exist_equips %}
+    {% with index=forloop.counter0 %}
+    {% if 0 < index %},{% endif %}
+    {% endwith %}
+    {
+      'unit_id': '{{ equip.unit_id }}',
+      'attribute_desc': '{{ equip.attribute__desc }}',
+      'img_src': '{{ STATIC_PREFIX }}root/img/item/equips/{{ equip.unit_id }}.png',
+      'rarity': {{ equip.rarity }}
+    }
+    {% endfor %}
+  ];
+  const enemies = {
+    {% for e in enemies %}
+      '{{ e.pk }}': {
+        'desc_jp': '{{ e.desc_jp }}',
+        'short_desc_jp': '{{ e.short_desc_jp }}',
+        'group_desc_jp': '{{ e.group_desc_jp }}',
+        'difficulties': [
+          {% for q in e.quest_set.all %}
+            {
+              'quest_id': '{{ q.id }}',
+              'pk': '{{ q.difficulty.pk }}',
+              'desc_jp': '{{ q.difficulty.desc_jp }}',
+              'short_desc_jp': '{{ q.difficulty.short_desc_jp }}',
+              'group_desc_jp': '{{ q.difficulty.group_desc_jp }}'
+            },
+          {% endfor %}
+      ]},
+    {% endfor %}
+  };
+  const rarity_img_src = [];
+  for (let i = 1; i < 6; i++) {
+    rarity_img_src.push('{{ STATIC_PREFIX }}root/img/sprites/rarity/star' + i + '.png')
+  };
+</script>
+<script src="{% static 'party/js/ecrire_form.js' %}"></script>
+<script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/raphael.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/underscore.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/sequence-diagram.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/jquery.flowchart.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'party/css/form.css' %}" type="text/css">
+{% endblock %}

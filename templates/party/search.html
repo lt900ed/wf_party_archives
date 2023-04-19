@@ -1,0 +1,254 @@
+{% extends 'party/base.html' %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block titletext %}{{ condition_title }} | {{ block.super }}{% endblock %}
+{% block og_titletext %}{{ condition_title }}{% endblock %}
+{% block og_type %}website{% endblock %}
+{% block og_description %}{{ block.super }}{% endblock %}
+{% block og_image %}{{ block.super }}{{ STATIC_PREFIX }}root/img/favicon/android-icon-192x192.png{% endblock %}
+{% block og_twittercard %}{{ block.super }}{% endblock %}
+
+{% block extracss %}
+<meta name="msvalidate.01" content="49CEBBF51AD9BC3425AEA867E8BEA754" />
+<link rel="stylesheet" href="{% static 'party/css/search.css' %}" type="text/css">
+{% endblock %}
+
+{% block popup %}
+<div id="selectUnit" class="popupBase">
+  <a href="#!" class="popupUnshown"></a>
+  <div class="popupContent scrollable">
+    <div class="popWrap withPopFooter">
+      <div class="registDesc">
+        <p>選択したキャラ・装備を使っているパーティを検索します。複数選択した場合全てを使っているパーティのみがヒットします。</p>
+      </div>
+      <h3 id="charListHeader">キャラ</h3>
+      <ul class="charList">
+      </ul>
+      <h3 id="equipListHeader">装備</h3>
+      <ul class="equipList">
+      </ul>
+      <div class="popFooter">
+        <div id="btnEnterUnit" class="btn ready popFooterBtn">OK</div>
+        <div id="btnCancelUnit" class="btn weak ready popFooterBtn">キャンセル</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<article id="searchForm">
+  <h2>検索条件</h2>
+  <form id="formSearch">
+    <div class="formItem">
+      <label>キャラ・装備</label>
+      <div class="inputWrap">
+        <ul id="useUnitList">
+          {% if enable_search_by_unit %}
+          <li class="btn weak pdd0" id="btnSelectUnit"><a id="uOpen" href="#selectUnit">キャラ・装備を選択</a>
+          {% else %}
+          <li class="btn disable pdd0"><a id="uOpen" href="#!">キャラ・装備指定検索はメンテ中です</a>
+          {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="formItem">
+      <label>クエスト</label>
+      <div class="inputWrap">
+        <div class="questWrap">
+          <div class="selectwrap enemy">
+            <select name="form-0-enemy" class="form-control form-enemy" id="id_form-0-enemy">
+              <option value="" selected="">敵を選択</option>
+              {% for e in enemies %}
+                {% ifchanged e.group_desc_jp %}
+                  {% if forloop.first %}</optgroup>{% endif %}
+                  <optgroup label="{{ e.group_desc_jp }}">
+                {% endifchanged %}
+                <option value="{{ e.id }}">{{ e.desc_jp }}</option>
+              {% endfor %}
+              </optgroup>
+            </select>
+          </div>
+          <div class="selectwrap difficulty inactive">
+            <select name="form-0-difficulty" class="form-control form-difficulty" id="id_form-0-difficulty">
+              <option value="" selected="">----</option>
+              <option value="1">チャレンジシングルバトル 地獄級</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="formItem">
+      <label>タグ</label>
+      <div class="inputWrap">
+        <ul class="tagList">
+          {% for t in exist_tags %}
+          <li class="Tagli" data-tag_desc="{{ t.desc }}">
+            <div class="tagWrap">#{{ t.desc }}({{ t.p_cnt }})</div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="formItem">
+      <label>パワフリタイプ</label>
+      <div class="inputWrap">
+        <select id="selectLeaderRole">
+          <option value="" selected>未指定</option>
+          {% for r in roles %}
+          <option value="{{ r.desc }}">{{ r.desc_jp }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="formItem">
+      <label>手持ちの考慮</label>
+      <div class="inputWrap">
+        <ul>
+          <li>
+            <div class="considerWrap">
+              <input type="checkbox" class="checkInput" id="considerChars">
+              <label class="checkLabel" for="considerChars">キャラを考慮</label>
+            </div>
+          </li>
+          <li>
+            <div class="considerWrap">
+              <input type="checkbox" class="checkInput" id="considerEquips">
+              <label class="checkLabel" for="considerEquips">装備を考慮</label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="btnSearch" class="btn ready">検索</div>
+  </form>
+</article>
+<article id="searchResult">
+  {% if parties is not None %}
+  {% include 'party/paging.html' %}
+  {% if result_info.count %}
+  <ul id="resultHeader">
+    <li><div class="resultCount">{{ result_info.count }} 件中 {{ result_info.start_index }} ～ {{ result_info.end_index }}を表示</div></li>
+    <li>
+      <div class="inputWrap">
+        <select id="selectSort">
+          <option value="recent_good" selected>最近のいいねが多い順</option>
+          <option value="new">新しい順</option>
+          <option value="old">古い順</option>
+          <option value="good">合計のいいねが多い順</option>
+          <option value="bad">合計のいいねが少ない順</option>
+          <option value="tgt_quest_recent_good" class="inactive">指定クエストの最近のいいね順</option>
+          <option value="tgt_quest_good" class="inactive">指定クエストの合計のいいね順</option>
+        </select>
+      </div>
+    </li>
+  </ul>
+  <ul id="resultList">
+    {% for p in parties %}
+    <li class="partyli">
+      <a class="partyWrap" href="{% url 'party:detail' party_id=p.party_id %}" target="_blank">
+        <div class="partyTitle">{{ p.title }}</div>
+        <div class=partySubWrap>
+          <div class="partyImage"><img src="{% url 'party:party_img_shortcut_ja_zh' party_id=p.party_id lang='ja' ext='jpg' %}"></div>
+          <div class="partyOverview">
+            <div class="partyQuestWrap">
+              <ul class="partyQuestList">
+                {% for q in p.polls %}
+                <li class="partyQuestli">
+                  <div class="partyQuestDesc">{{ q.quest__enemy__short_desc_jp }} {{ q.quest__difficulty__short_desc_jp }}</div>
+                  <div class="icon--useful{% if q.my_cnt %} isUseful{% endif %}"></div>
+                  <div class="partyQuestUsefulCnt">x{{q.poll_cnt}}</div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="partyTagWrap">
+              <ul class="partyTagList">
+                {% for t in p.tag %}
+                <li class="partyTagli">#{{ t.desc }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="partyOverviewFooter">
+              <ul class="partyOverviewFooterList">
+                {% if p.is_new %}
+                <li class="newSign">NEW!</li>
+                {% endif %}
+                <li class="dateAdded">{{ p.date_added_jp }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="noResult">該当するパーティは見つかりませんでした</p>
+  {% endif %}
+  {% include 'party/paging.html' %}
+  {% else %}
+  <p class="noResult">検索ボタンを押すとここに結果が表示されます</p>
+  {% endif %}
+</article>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+  const exist_chars = [
+    {% for char in exist_chars %}
+    {% with index=forloop.counter0 %}
+    {% if 0 < index %},{% endif %}
+    {% endwith %}
+    {
+      'unit_id': '{{ char.unit_id }}',
+      'name_jp': '{{ char.name_jp }}',
+      'attribute_desc': '{{ char.attribute__desc }}',
+      'img_src': '{{ STATIC_PREFIX }}root/img/chars/{{ char.unit_id }}/square_0.png',
+      'rarity': {{ char.rarity }}
+    }
+    {% endfor %}
+  ];
+  const exist_equips = [
+    {% for equip in exist_equips %}
+    {% with index=forloop.counter0 %}
+    {% if 0 < index %},{% endif %}
+    {% endwith %}
+    {
+      'unit_id': '{{ equip.unit_id }}',
+      'name_jp': '{{ equip.name_jp }}',
+      'attribute_desc': '{{ equip.attribute__desc }}',
+      'img_src': '{{ STATIC_PREFIX }}root/img/item/equips/{{ equip.unit_id }}.png',
+      'rarity': {{ equip.rarity }}
+    }
+    {% endfor %}
+  ];
+  const enemies = {
+    {% for e in enemies %}
+      '{{ e.pk }}': {
+        'desc_jp': '{{ e.desc_jp }}',
+        'short_desc_jp': '{{ e.short_desc_jp }}',
+        'group_desc_jp': '{{ e.group_desc_jp }}',
+        'difficulties': [
+          {% for q in e.quest_set.all %}
+            {
+              'quest_id': '{{ q.id }}',
+              'pk': '{{ q.difficulty.pk }}',
+              'desc_jp': '{{ q.difficulty.desc_jp }}',
+              'short_desc_jp': '{{ q.difficulty.short_desc_jp }}',
+              'group_desc_jp': '{{ q.difficulty.group_desc_jp }}'
+            },
+          {% endfor %}
+      ]},
+    {% endfor %}
+  };
+  const rarity_img_src = [];
+  for (let i = 1; i < 6; i++) {
+    rarity_img_src.push('{{ STATIC_PREFIX }}root/img/sprites/rarity/star' + i + '.png')
+  };
+  var msg = '{{ msg }}'
+</script>
+<script src="{% static 'party/js/ecrire_search.js' %}"></script>
+{% endblock %}

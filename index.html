@@ -1,7 +1,1513 @@
-<html><head></head>
-<body>
-    this is test</r>
-    <img src="static/root/img/bg.gif">
-    this is test</r>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width , initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>全てのパーティ | ワーフリパーティファインダー(β)</title>
+  <meta property="og:title" content="全てのパーティ">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ワーフリパーティファインダー(β)">
+  <meta property="og:description" content="自分の所持キャラで組めるパーティが探せるワーフリのファンサイトです。">
+  <meta property="og:url" content="https://lt900ed.github.io/wf_party_archives/">
+  <meta property="og:image" content="static/root/img/favicon/android-icon-192x192.png">
+  <meta name="twitter:site" content="@WFPartyFinder">
+  <meta name="twitter:card" content="summary">
+  <link rel="apple-touch-icon" sizes="57x57" href="static/root/img/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="static/root/img/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="static/root/img/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="static/root/img/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="static/root/img/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="static/root/img/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="static/root/img/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="static/root/img/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="static/root/img/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="static/root/img/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="static/root/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="static/root/img/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="static/root/img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="static/root/img/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="static/root/img/favicon/ms-icon-144x144.png">
+  <link rel="stylesheet" href="static/home/css/reset.css" type="text/css">
+  <link rel="stylesheet" href="static/home/css/common.css" type="text/css">
+  <link rel="stylesheet" href="static/party/css/base.css" type="text/css">
+  <link rel="stylesheet" href="static/party/css/search.css" type="text/css">
+</head>
+
+<body class="body">
+  <header id="pageHeader">
+    <div class="logo">
+      <h1><a href="">ワーフリパーティファインダー(β)</a></h1>
+    </div>
+    <nav>
+      <ul id="pageNav">
+        <li id="pOpen"><a href="#registParty">パーティ登録</a></li>
+        <li id="uuOpen"><a href="#registUserUnits">手持ち登録</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="registUserUnits" class="popupBase"><a href="#!" class="popupUnshown"></a>
+    <div class="popupContent">
+      <div class="popWrap">
+        <div class="registDesc">
+          <p><a href="http://eliya-bot.herokuapp.com/" target="_blank"
+              rel="noopener">ワーフリ所有率チェッカー</a>さんで手持ちを登録して、「共有リンクを取得」のURLを貼り付けてください。</p>
+          <p>手持ちが更新されたらその都度このフォームから登録をお願いします。</p>
+        </div>
+        <form id="formRegistUU"><input id="inputResistUU" type="url" name="url" size="45" maxlength="45"
+            placeholder="http://eliya-bot.herokuapp.com/12345">
+          <div id="btnResistUU" class="btn ready">取得開始</div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="registParty" class="popupBase"><a href="#!" id="pClose" class="popupUnshown"></a>
+    <div class="popupContent">
+      <div class="popWrap">
+        <div class="registDesc">
+          <p>編成画面のスクリーンショットを添付して下さい。解析して登録ページを表示します。</p>
+          <p>画像は解析精度向上のため保存させて頂きます。個人情報が映ってないものを添付して下さい。</p>
+          <p><a href="#registPartyByText">URLからの登録はこちら</a></p>
+        </div>
+        <form id="formRegistSS" action="/detector/register_by_ss" method="POST" enctype="multipart/form-data"><input
+            type="file" name="ss" accept="image/*" required="" id="id_ss"><input type="hidden"
+            name="csrfmiddlewaretoken" value="6ESgUUmV02QqFjwobdwHzMAAMCBIbgm373sc6QNUSRi8PqIDPTjHOZ0ENjnZO6ib"><button
+            type="submit" class="btn btn-primary">解析開始</button></form>
+        <div class="ssSample"><img src="static/detector/img/ss_sample.jpg"></div>
+      </div>
+    </div>
+  </div>
+  <div id="registPartyByText" class="popupBase"><a href="#!" id="pClose" class="popupUnshown"></a>
+    <div class="popupContent">
+      <div class="popWrap">
+        <div class="registDesc">
+          <p><a href="http://eliya-bot.herokuapp.com/" target="_blank"
+              rel="noopener">ワーフリ所有率チェッカー</a>さんでパーティを作成して、「画像リンクを取得」のURLを貼り付けてください。</p>
+          <p>既に登録されているパーティの場合、そのパーティの詳細ページへ移動します。</p>
+          <p><a href="#registParty">スクリーンショットからの登録はこちら</a></p>
+        </div>
+        <form id="formRegistP"><input id="inputResistP" type="url" name="url" size="45" maxlength="300"
+            placeholder="https://eliya-bot.herokuapp.com/comp/a-b-c-d-e-f-g_h_i-j-l-m-n.ja.png">
+          <div id="btnResistP" class="btn ready">登録画面へ移動</div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="selectUnit" class="popupBase"><a href="#!" class="popupUnshown"></a>
+    <div class="popupContent scrollable">
+      <div class="popWrap withPopFooter">
+        <div class="registDesc">
+          <p>選択したキャラ・装備を使っているパーティを検索します。複数選択した場合全てを使っているパーティのみがヒットします。</p>
+        </div>
+        <h3 id="charListHeader">キャラ</h3>
+        <ul class="charList"></ul>
+        <h3 id="equipListHeader">装備</h3>
+        <ul class="equipList"></ul>
+        <div class="popFooter">
+          <div id="btnEnterUnit" class="btn ready popFooterBtn">OK</div>
+          <div id="btnCancelUnit" class="btn weak ready popFooterBtn">キャンセル</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toolbar">
+    <div id="errMsg" class="message hidden"></div>
+    <div id="normalMsg" class="message hidden"></div>
+  </div>
+  <div id="eolMsg">
+    <article>
+    <p>
+      ワーフリパーティファインダーは2023/4/20をもって運営を終了します。
+      詳しくは<a href="https://twitter.com/WFPartyFinder/status/1643597201824964608" target="_blank" rel="noopener">ツイッター</a>をご確認下さい。
+    </p>
+    </article>
+  </div>
+  <div class="wrapper">
+    <article id="searchForm">
+      <h2>検索条件</h2>
+      <form id="formSearch">
+        <div class="formItem"><label>キャラ・装備</label>
+          <div class="inputWrap">
+            <ul id="useUnitList">
+              <li class="btn weak pdd0" id="btnSelectUnit"><a id="uOpen" href="#selectUnit">キャラ・装備を選択</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="formItem"><label>クエスト</label>
+          <div class="inputWrap">
+            <div class="questWrap">
+              <div class="selectwrap enemy"><select name="form-0-enemy" class="form-control form-enemy"
+                  id="id_form-0-enemy">
+                  <option value="" selected="selected">敵を選択</option>
+                  <optgroup label="クグイとリョウキの特別訓練">
+                    <option value="233">星喰いデオフラスス【クグイ】</option>
+                  </optgroup>
+                  <optgroup label="無限演武">
+                    <option value="229">直接攻撃演武（耐久）</option>
+                    <option value="230">スキル演武</option>
+                    <option value="231">パワフリ演武</option>
+                  </optgroup>
+                  <optgroup label="恒常ボス">
+                    <option value="109">エギルエンヴィー</option>
+                    <option value="77">グリズリー</option>
+                    <option value="68">ドーサルブラザーズ</option>
+                    <option value="1">オロチ</option>
+                    <option value="2">妖狐</option>
+                    <option value="3">アドミニスター</option>
+                    <option value="4">Sec-5200Li</option>
+                    <option value="5">白虎</option>
+                    <option value="6">風将ファングライダー</option>
+                    <option value="7">カースアークエギル</option>
+                    <option value="8">ヤドリオー</option>
+                    <option value="9">タイダルクラーケン</option>
+                    <option value="10">ルインゴーレム</option>
+                    <option value="11">ファ・ルインガード</option>
+                    <option value="12">不死王レシタール</option>
+                    <option value="13">ボルトホロウ</option>
+                    <option value="14">ヴィエ・ソラス</option>
+                  </optgroup>
+                  <optgroup label="廃竜">
+                    <option value="15">灼炎の廃竜 イルサバティカ</option>
+                    <option value="16">水蝕の廃竜 イルラウドレス</option>
+                    <option value="17">黒雷の廃竜 イルコオプス</option>
+                    <option value="18">殲風の廃竜 イルグラウル</option>
+                    <option value="19">光芒の廃竜 イルメタレイ</option>
+                    <option value="20">凶闇の廃竜 イルアンスラ</option>
+                  </optgroup>
+                  <optgroup label="ゆらぎ幽玄域">
+                    <option value="22">ゆらぎの迷宮 幽玄域 火</option>
+                    <option value="23">ゆらぎの迷宮 幽玄域 水</option>
+                    <option value="24">ゆらぎの迷宮 幽玄域 雷</option>
+                    <option value="25">ゆらぎの迷宮 幽玄域 風</option>
+                    <option value="26">ゆらぎの迷宮 幽玄域 光</option>
+                    <option value="27">ゆらぎの迷宮 幽玄域 闇</option>
+                  </optgroup>
+                  <optgroup label="ゆらぎ崩壊域">
+                    <option value="28">ゆらぎの迷宮 崩壊域 アビスの獣</option>
+                    <option value="29">ゆらぎの迷宮 崩壊域 火</option>
+                    <option value="30">ゆらぎの迷宮 崩壊域 水</option>
+                    <option value="31">ゆらぎの迷宮 崩壊域 雷</option>
+                    <option value="32">ゆらぎの迷宮 崩壊域 風</option>
+                    <option value="33">ゆらぎの迷宮 崩壊域 光</option>
+                    <option value="34">ゆらぎの迷宮 崩壊域 闇</option>
+                    <option value="35">ゆらぎの迷宮 崩壊域 深層に至る扉</option>
+                  </optgroup>
+                  <optgroup label="ゆらぎ宝物域">
+                    <option value="81">ゆらぎの迷宮 宝物域 火</option>
+                    <option value="82">ゆらぎの迷宮 宝物域 水</option>
+                    <option value="83">ゆらぎの迷宮 宝物域 雷</option>
+                    <option value="84">ゆらぎの迷宮 宝物域 風</option>
+                    <option value="85">ゆらぎの迷宮 宝物域 光</option>
+                    <option value="86">ゆらぎの迷宮 宝物域 闇</option>
+                  </optgroup>
+                  <optgroup label="ゆらぎの迷宮">
+                    <option value="36">ゆらぎの迷宮 火</option>
+                    <option value="37">ゆらぎの迷宮 水</option>
+                    <option value="38">ゆらぎの迷宮 雷</option>
+                    <option value="39">ゆらぎの迷宮 風</option>
+                    <option value="40">ゆらぎの迷宮 光</option>
+                    <option value="41">ゆらぎの迷宮 闇</option>
+                    <option value="42">ゆらぎの迷宮 経験値&amp;マナ</option>
+                  </optgroup>
+                  <optgroup label="ストーリー">
+                    <option value="43">8章14-1 醜王オーグ</option>
+                    <option value="44">7章14-2 招かれざる客</option>
+                  </optgroup>
+                  <optgroup label="極時の試練シリーズ">
+                    <option value="149">時と火の試練</option>
+                    <option value="148">時と水の試練</option>
+                    <option value="147">時と雷の試練</option>
+                    <option value="150">時と風の試練</option>
+                    <option value="151">時と光の試練</option>
+                    <option value="152">時と闇の試練</option>
+                  </optgroup>
+                  <optgroup label="サイドストーリー">
+                    <option value="80">マザー・ラヴ</option>
+                    <option value="79">コンダクター</option>
+                    <option value="52">ロストオブリビオン</option>
+                    <option value="53">サージェントドール</option>
+                    <option value="58">超人ゼグラ</option>
+                    <option value="57">ジーンドラゴン</option>
+                    <option value="69">前鬼後鬼</option>
+                    <option value="70">画竜</option>
+                    <option value="99">ブラックドラゴン</option>
+                    <option value="100">プロキオ変異体</option>
+                    <option value="66">統括AI</option>
+                    <option value="65">自動警装SecMk2</option>
+                    <option value="76">星喰いデオフラスス</option>
+                    <option value="72">フェイクダーリンⅡ</option>
+                    <option value="55">ステラバスター</option>
+                    <option value="54">ハーリダル</option>
+                    <option value="182">ショコラバード</option>
+                    <option value="88">マグノス</option>
+                    <option value="102">ドラゴンイーター</option>
+                  </optgroup>
+                  <optgroup label="追憶の試練">
+                    <option value="175">超人ゼグラ【追憶】</option>
+                    <option value="176">ステラバスター【追憶】</option>
+                    <option value="177">統括AI【追憶】</option>
+                    <option value="178">ロストオブリビオン【追憶】</option>
+                    <option value="179">前鬼後鬼【追憶】</option>
+                    <option value="180">星喰いデオフラスス【追憶】</option>
+                    <option value="181">ショコラバード【追憶】</option>
+                    <option value="183">マザー・ラヴ【追憶】</option>
+                    <option value="184">プロキオ変異体【追憶】</option>
+                    <option value="222">マグノス【追憶】</option>
+                    <option value="223">ドラゴンイーター【追憶】</option>
+                  </optgroup>
+                  <optgroup label="期間限定ボス">
+                    <option value="59">暴走ロメロ</option>
+                    <option value="61">風神・雷神</option>
+                    <option value="78">グラトドン</option>
+                    <option value="97">ジャックオランタン</option>
+                    <option value="103">聖夜の雪像G</option>
+                    <option value="21">比翼の使い魔</option>
+                    <option value="107">アークガーディアン</option>
+                    <option value="108">A・シープマテリア</option>
+                    <option value="163">刈り取りくん</option>
+                    <option value="162">廃龍イルフリード</option>
+                    <option value="164">ヌルプルキング</option>
+                    <option value="168">STM-パリデス</option>
+                    <option value="214">ブラックドラゴン(ブラッククローバー)</option>
+                    <option value="218">パラサイト・アビス</option>
+                  </optgroup>
+                  <optgroup label="TA試練">
+                    <option value="45">タイムアタックバトル 火の試練</option>
+                    <option value="46">タイムアタックバトル 水の試練</option>
+                    <option value="47">タイムアタックバトル 雷の試練</option>
+                    <option value="48">タイムアタックバトル 風の試練</option>
+                    <option value="49">タイムアタックバトル 光の試練</option>
+                    <option value="50">タイムアタックバトル 闇の試練</option>
+                  </optgroup>
+                  <optgroup label="TA">
+                    <option value="51">タイムアタックバトル(2021/2)</option>
+                  </optgroup>
+                  <optgroup label="レーヌシリーズ">
+                    <option value="60">レーヌ・ブル</option>
+                    <option value="98">レーヌ・ルージュ</option>
+                    <option value="173">レーヌ・ヴェルト</option>
+                  </optgroup>
+                  <optgroup label="精霊獣シリーズ">
+                    <option value="67">雷亀プログレオ</option>
+                    <option value="113">火魔オルタネア</option>
+                    <option value="87">水鬼スラムゴン</option>
+                    <option value="161">風師アトモシア</option>
+                    <option value="156">光蜘ドゥーメオ</option>
+                    <option value="169">闇鳳シアトリオ</option>
+                  </optgroup>
+                  <optgroup label="ハニワシリーズ">
+                    <option value="64">旋風土機ハニンガー</option>
+                    <option value="211">旋風直撃ハニンガー</option>
+                    <option value="212">旋風強振ハニンガー</option>
+                    <option value="213">旋風必殺ハニンガー</option>
+                    <option value="63">雲水土機ハニンガー</option>
+                    <option value="104">雲水狂乱ハニンガー</option>
+                    <option value="105">雲水必殺ハニンガー</option>
+                    <option value="106">雲水強振ハニンガー</option>
+                    <option value="62">閃火土機ハニンガー</option>
+                    <option value="73">宵闇土機ハニンガー</option>
+                    <option value="153">宵闇必殺ハニンガー</option>
+                    <option value="154">宵闇強振ハニンガー</option>
+                    <option value="155">宵闇直撃ハニンガー</option>
+                    <option value="74">溢光土機ハニンガー</option>
+                    <option value="94">溢光直撃ハニンガー</option>
+                    <option value="95">溢光必殺ハニンガー</option>
+                    <option value="96">溢光強振ハニンガー</option>
+                    <option value="75">奔雷土機ハニンガー</option>
+                    <option value="165">奔雷直撃ハニンガー</option>
+                    <option value="166">奔雷強振ハニンガー</option>
+                    <option value="167">奔雷必殺ハニンガー</option>
+                  </optgroup>
+                  <optgroup label="戦陣の宴シリーズ">
+                    <option value="101">戦陣の宴</option>
+                    <option value="114">因竜の宴</option>
+                    <option value="157">契鰭の宴</option>
+                    <option value="174">乏竜の宴</option>
+                  </optgroup>
+                  <optgroup label="コンバットダイバー">
+                    <option value="111">ショコラバード(コンバットダイバー)</option>
+                    <option value="110">グラトドン(コンバットダイバー)</option>
+                    <option value="112">レシタール(コンバットダイバー)</option>
+                    <option value="160">タイダルクラーケン(コンバットダイバー)</option>
+                    <option value="159">水鬼スラムゴン(コンバットダイバー)</option>
+                    <option value="158">ロストオブリビオン(コンバットダイバー)</option>
+                    <option value="172">統括AI(コンバットダイバー)</option>
+                    <option value="171">ステラバスター(コンバットダイバー)</option>
+                    <option value="170">ファ・ルインガード(コンバットダイバー)</option>
+                    <option value="215">ボルトホロウ(コンバットダイバー)</option>
+                    <option value="216">前鬼後鬼(コンバットダイバー)</option>
+                    <option value="217">星喰いデオフラスス(コンバットダイバー)</option>
+                    <option value="228">ジャックオランタン(コンバットダイバー)</option>
+                    <option value="227">イルメタレイ(コンバットダイバー)</option>
+                    <option value="226">瑞狐(コンバットダイバー)</option>
+                  </optgroup>
+                  <optgroup label="粛清者討伐戦">
+                    <option value="219">歩兵の粛清者</option>
+                    <option value="220">僧正の粛清者</option>
+                    <option value="221">異形の粛清者</option>
+                    <option value="224">女帝の粛清者</option>
+                  </optgroup>
+                  <optgroup label="機兵シリーズ">
+                    <option value="225">紅機兵ハインライト</option>
+                    <option value="232">翠機兵クラーグ</option>
+                  </optgroup>
+                  <optgroup label="期間限定ザコ">
+                    <option value="56">キノ500体</option>
+                    <option value="71">キノ600体</option>
+                  </optgroup>
+                  <optgroup label="練習バトル">
+                    <option value="93">かたい人形</option>
+                    <option value="92">はやい人形</option>
+                    <option value="91">つよい人形</option>
+                    <option value="90">呪いの人形</option>
+                    <option value="89">守りの人形</option>
+                  </optgroup>
+                </select></div>
+              <div class="selectwrap difficulty inactive"><select name="form-0-difficulty"
+                  class="form-control form-difficulty" id="id_form-0-difficulty">
+                  <option value="" selected="selected">----</option>
+                  <option value="1">チャレンジシングルバトル 地獄級</option>
+                </select></div>
+            </div>
+          </div>
+        </div>
+        <div class="formItem"><label>タグ</label>
+          <div class="inputWrap">
+            <ul class="tagList">
+              <li class="Tagli" data-tag_desc="オート向け">
+                <div class="tagWrap">#オート向け(1481)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="限定キャラあり">
+                <div class="tagWrap">#限定キャラあり(1170)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="スキルダメージ">
+                <div class="tagWrap">#スキルダメージ(1005)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="限定あり">
+                <div class="tagWrap">#限定あり(552)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="パワフリダメージ">
+                <div class="tagWrap">#パワフリダメージ(480)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="限定武器あり">
+                <div class="tagWrap">#限定武器あり(427)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="火属性">
+                <div class="tagWrap">#火属性(321)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="水属性">
+                <div class="tagWrap">#水属性(301)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="手動向け">
+                <div class="tagWrap">#手動向け(288)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="貫通">
+                <div class="tagWrap">#貫通(269)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="闇属性">
+                <div class="tagWrap">#闇属性(256)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="恒常キャラのみ">
+                <div class="tagWrap">#恒常キャラのみ(247)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="雷属性">
+                <div class="tagWrap">#雷属性(238)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="風属性">
+                <div class="tagWrap">#風属性(223)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="光属性">
+                <div class="tagWrap">#光属性(199)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="趣味パ">
+                <div class="tagWrap">#趣味パ(187)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="恒常武器(ガチャ除く)のみ">
+                <div class="tagWrap">#恒常武器(ガチャ除く)のみ(182)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="直撃ダメージ">
+                <div class="tagWrap">#直撃ダメージ(179)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="フィーバー">
+                <div class="tagWrap">#フィーバー(165)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="ワンパン">
+                <div class="tagWrap">#ワンパン(154)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="高級">
+                <div class="tagWrap">#高級(149)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="速攻">
+                <div class="tagWrap">#速攻(139)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="背水">
+                <div class="tagWrap">#背水(133)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="恒常武器(ガチャ含む)のみ">
+                <div class="tagWrap">#恒常武器(ガチャ含む)のみ(96)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="☆5不使用">
+                <div class="tagWrap">#☆5不使用(85)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="浮遊">
+                <div class="tagWrap">#浮遊(83)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="開幕9チェイン対応">
+                <div class="tagWrap">#開幕9チェイン対応(77)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="初心者向け">
+                <div class="tagWrap">#初心者向け(75)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="セミオート向け">
+                <div class="tagWrap">#セミオート向け(71)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="マルボダメージ">
+                <div class="tagWrap">#マルボダメージ(67)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="ネタパ">
+                <div class="tagWrap">#ネタパ(63)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="EXブースト必須">
+                <div class="tagWrap">#EXブースト必須(61)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="手動">
+                <div class="tagWrap">#手動(46)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="直撃">
+                <div class="tagWrap">#直撃(43)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="アビ獣">
+                <div class="tagWrap">#アビ獣(42)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="渾身">
+                <div class="tagWrap">#渾身(38)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="揺らぎ周回">
+                <div class="tagWrap">#揺らぎ周回(37)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="趣味パーティ">
+                <div class="tagWrap">#趣味パーティ(36)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="アビリティダメージ">
+                <div class="tagWrap">#アビリティダメージ(30)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="高速周回">
+                <div class="tagWrap">#高速周回(29)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="闇マルボ">
+                <div class="tagWrap">#闇マルボ(26)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="アタッカー編成">
+                <div class="tagWrap">#アタッカー編成(24)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="サポート編成">
+                <div class="tagWrap">#サポート編成(24)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="編成初心者">
+                <div class="tagWrap">#編成初心者(20)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="オート可能">
+                <div class="tagWrap">#オート可能(18)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="手動のみ">
+                <div class="tagWrap">#手動のみ(16)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="棺桶">
+                <div class="tagWrap">#棺桶(15)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="プルパ">
+                <div class="tagWrap">#プルパ(15)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="マルチボール">
+                <div class="tagWrap">#マルチボール(12)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="固定メンバー向け">
+                <div class="tagWrap">#固定メンバー向け(11)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="超級武器なし">
+                <div class="tagWrap">#超級武器なし(10)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="毒">
+                <div class="tagWrap">#毒(9)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="崩壊域周回">
+                <div class="tagWrap">#崩壊域周回(9)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="EXブースト推奨">
+                <div class="tagWrap">#EXブースト推奨(8)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="極時">
+                <div class="tagWrap">#極時(8)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="パワフリダメージ趣味パーティ">
+                <div class="tagWrap">#パワフリダメージ趣味パーティ(8)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="機械パ">
+                <div class="tagWrap">#機械パ(7)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="風統一">
+                <div class="tagWrap">#風統一(7)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="コンボ">
+                <div class="tagWrap">#コンボ(6)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="添削希望">
+                <div class="tagWrap">#添削希望(5)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="マルボフィーバー">
+                <div class="tagWrap">#マルボフィーバー(4)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="浴衣">
+                <div class="tagWrap">#浴衣(4)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="スコ剣">
+                <div class="tagWrap">#スコ剣(4)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="多属性">
+                <div class="tagWrap">#多属性(3)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="マナ稼ぎ">
+                <div class="tagWrap">#マナ稼ぎ(3)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="魔族パ">
+                <div class="tagWrap">#魔族パ(3)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="剣士パワフリ">
+                <div class="tagWrap">#剣士パワフリ(3)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="プリイグナイター">
+                <div class="tagWrap">#プリイグナイター(3)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="１０秒台">
+                <div class="tagWrap">#１０秒台(3)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="即死王レシタール">
+                <div class="tagWrap">#即死王レシタール(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="操里ユカリコ">
+                <div class="tagWrap">#操里ユカリコ(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="限定キャラなし">
+                <div class="tagWrap">#限定キャラなし(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="セミオート">
+                <div class="tagWrap">#セミオート(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="へんたいふしんしゃさん">
+                <div class="tagWrap">#へんたいふしんしゃさん(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="初撃のことしか考えない">
+                <div class="tagWrap">#初撃のことしか考えない(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="獣パ">
+                <div class="tagWrap">#獣パ(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="のら！">
+                <div class="tagWrap">#のら！(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="めぐみん">
+                <div class="tagWrap">#めぐみん(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="直攻に救いを">
+                <div class="tagWrap">#直攻に救いを(2)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="格闘パワフリ">
+                <div class="tagWrap">#格闘パワフリ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="パラシュなし">
+                <div class="tagWrap">#パラシュなし(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="water">
+                <div class="tagWrap">#water(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="ケモパ">
+                <div class="tagWrap">#ケモパ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="アルム">
+                <div class="tagWrap">#アルム(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="条件付き">
+                <div class="tagWrap">#条件付き(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="無敵">
+                <div class="tagWrap">#無敵(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="スキル演武">
+                <div class="tagWrap">#スキル演武(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="限定武器">
+                <div class="tagWrap">#限定武器(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="フィーバーコンボ">
+                <div class="tagWrap">#フィーバーコンボ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="ストーリー">
+                <div class="tagWrap">#ストーリー(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="生首">
+                <div class="tagWrap">#生首(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="低レアパ">
+                <div class="tagWrap">#低レアパ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="まっがーれ↓">
+                <div class="tagWrap">#まっがーれ↓(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="耐久">
+                <div class="tagWrap">#耐久(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="あり">
+                <div class="tagWrap">#あり(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="追憶">
+                <div class="tagWrap">#追憶(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="limited">
+                <div class="tagWrap">#limited(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="連撃">
+                <div class="tagWrap">#連撃(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="プラチナム">
+                <div class="tagWrap">#プラチナム(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="盆踊り">
+                <div class="tagWrap">#盆踊り(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="manual">
+                <div class="tagWrap">#manual(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="☆4~5不使用">
+                <div class="tagWrap">#☆4~5不使用(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="無限">
+                <div class="tagWrap">#無限(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="鈍足特攻あり恒常キャラのみ">
+                <div class="tagWrap">#鈍足特攻あり恒常キャラのみ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="貫通剣パワフリテンプレが倒せない">
+                <div class="tagWrap">#貫通剣パワフリテンプレが倒せない(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="精霊パ">
+                <div class="tagWrap">#精霊パ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="卍速度卍">
+                <div class="tagWrap">#卍速度卍(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="fever">
+                <div class="tagWrap">#fever(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="配布限定のみ">
+                <div class="tagWrap">#配布限定のみ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="世界樹の朝露">
+                <div class="tagWrap">#世界樹の朝露(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="ラナーファンクラブ">
+                <div class="tagWrap">#ラナーファンクラブ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="射撃パワフリ">
+                <div class="tagWrap">#射撃パワフリ(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="#精一杯の感謝を">
+                <div class="tagWrap">##精一杯の感謝を(1)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="妖パ">
+                <div class="tagWrap">#妖パ(0)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="水棲パ">
+                <div class="tagWrap">#水棲パ(0)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="植物パ">
+                <div class="tagWrap">#植物パ(0)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="不安定">
+                <div class="tagWrap">#不安定(0)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="不死パ">
+                <div class="tagWrap">#不死パ(0)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="オート">
+                <div class="tagWrap">#オート(0)</div>
+              </li>
+              <li class="Tagli" data-tag_desc="ドラゴンパ">
+                <div class="tagWrap">#ドラゴンパ(0)</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="formItem"><label>パワフリタイプ</label>
+          <div class="inputWrap"><select id="selectLeaderRole">
+              <option value="" selected="selected">未指定</option>
+              <option value="Fist">格闘</option>
+              <option value="Sword">剣士</option>
+              <option value="Bow">射撃</option>
+              <option value="Support">補助</option>
+              <option value="Special">特殊</option>
+            </select></div>
+        </div>
+        <div class="formItem"><label>手持ちの考慮</label>
+          <div class="inputWrap">
+            <ul>
+              <li>
+                <div class="considerWrap"><input type="checkbox" class="checkInput" id="considerChars"><label
+                    class="checkLabel" for="considerChars">キャラを考慮</label></div>
+              </li>
+              <li>
+                <div class="considerWrap"><input type="checkbox" class="checkInput" id="considerEquips"><label
+                    class="checkLabel" for="considerEquips">装備を考慮</label></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="btnSearch" class="btn ready">検索</div>
+      </form>
+    </article>
+    <article id="searchResult">
+      <ul class="pagination"><!-- 数字の部分 -->
+        <li class="page-item active"><a class="page-link" href="#searchResult">1</a></li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=2#searchResult">2</a></li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=3#searchResult">3</a></li>
+        <li class="page-item omit">...</li>
+        <li class="page-item omit">...</li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=114#searchResult">114</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=115#searchResult">115</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=116#searchResult">116</a>
+        </li>
+      </ul>
+      <ul id="resultHeader">
+        <li>
+          <div class="resultCount">2315 件中 1 ～ 20を表示</div>
+        </li>
+        <li>
+          <div class="inputWrap"><select id="selectSort">
+              <option value="recent_good" selected="selected">最近のいいねが多い順</option>
+              <option value="new">新しい順</option>
+              <option value="old">古い順</option>
+              <option value="good">合計のいいねが多い順</option>
+              <option value="bad">合計のいいねが少ない順</option>
+              <option value="tgt_quest_recent_good" class="inactive">指定クエストの最近のいいね順</option>
+              <option value="tgt_quest_good" class="inactive">指定クエストの合計のいいね順</option>
+            </select></div>
+        </li>
+      </ul>
+      <ul id="resultList">
+        <li class="partyli"><a class="partyWrap" href="party/tiger_treasure_hunter-9.html" target="_blank">
+            <div class="partyTitle">2年間お疲れ様でした</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/tiger_treasure_hunter-9.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">キノ600 </div>
+                      <div class="icon--useful isUseful"></div>
+                      <div class="partyQuestUsefulCnt">x45</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">##精一杯の感謝を</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/06 01:27 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/wind_spbro_3anv-42"
+            target="_blank">
+            <div class="partyTitle">準汎用シエル混成(対スキル有効廃竜)</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/wind_spbro_3anv-42.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">水廃竜 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x3</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">火廃竜 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">ヤド マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">闇廃竜 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#オート向け</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                    <li class="partyTagli">#スキルダメージ</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/03/22 10:45 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/stella_ballot23-1"
+            target="_blank">
+            <div class="partyTitle">スペおらず演武51</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/stella_ballot23-1.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">直攻演武 </div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x3</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#直撃ダメージ</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/16 23:02 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/ruin_lady_meteor23-1"
+            target="_blank">
+            <div class="partyTitle">オロチ用水直攻パ</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/ruin_lady_meteor23-1.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">大蛇 シングル超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">大蛇 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x1</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#直撃ダメージ</li>
+                    <li class="partyTagli">#水属性</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                    <li class="partyTagli">#セミオート向け</li>
+                    <li class="partyTagli">#オート可能</li>
+                    <li class="partyTagli">#EXブースト推奨</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/09 09:45 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/wind_spbro_3anv-45"
+            target="_blank">
+            <div class="partyTitle">三位一体パ</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/wind_spbro_3anv-45.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">大蛇 シングル超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x3</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#パワフリダメージ</li>
+                    <li class="partyTagli">#直撃ダメージ</li>
+                    <li class="partyTagli">#渾身</li>
+                    <li class="partyTagli">#水属性</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                    <li class="partyTagli">#スキルダメージ</li>
+                    <li class="partyTagli">#趣味パ</li>
+                    <li class="partyTagli">#ネタパ</li>
+                    <li class="partyTagli">#趣味パーティ</li>
+                    <li class="partyTagli">#オート可能</li>
+                    <li class="partyTagli">#EXブースト必須</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/05 08:51 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/ghost_nymph-7" target="_blank">
+            <div class="partyTitle">雷廃竜　フィリア</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/ghost_nymph-7.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">雷廃竜 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x3</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList"></ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/02 13:59 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/swallow_knight_3anv-21"
+            target="_blank">
+            <div class="partyTitle">女帝　光パワフリフルオ</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/swallow_knight_3anv-21.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">女帝粛清 CSB地獄</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x3</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList"></ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/03/21 01:28 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/veteran_hunter_3anv-18"
+            target="_blank">
+            <div class="partyTitle">闇パワフリ　追憶3属性</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/veteran_hunter_3anv-18.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">オブリビ(追憶) CSB地獄</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">チョコ鳥(追憶) CSB地獄</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">ラヴ(追憶) CSB地獄</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList"></ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="dateAdded">2022/12/16 09:37 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/samurai-20" target="_blank">
+            <div class="partyTitle">ボルトホロウ　シングル0.01秒</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/samurai-20.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">木 シングル上級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x1</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">木 シングル中級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x1</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#ワンパン</li>
+                    <li class="partyTagli">#オート向け</li>
+                    <li class="partyTagli">#ネタパ</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/15 22:16 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/pbc_ceo_playable-2"
+            target="_blank">
+            <div class="partyTitle">オロチ　キング・ジョンソン</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/pbc_ceo_playable-2.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">大蛇 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList"></ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/03 23:12 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/wind_spbro_3anv-44"
+            target="_blank">
+            <div class="partyTitle">水パ流星祭コンビ　オロチソロ</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/wind_spbro_3anv-44.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">大蛇 シングル超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#直撃ダメージ</li>
+                    <li class="partyTagli">#水属性</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                    <li class="partyTagli">#スキルダメージ</li>
+                    <li class="partyTagli">#趣味パ</li>
+                    <li class="partyTagli">#ネタパ</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/03 18:34 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/wind_oracle_meteor23-1"
+            target="_blank">
+            <div class="partyTitle">sec フィリア</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/wind_oracle_meteor23-1.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">5200 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList"></ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/02 18:03 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/wind_spbro_3anv-43"
+            target="_blank">
+            <div class="partyTitle">イルサバティカ2D2S</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/wind_spbro_3anv-43.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">火廃竜 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#限定あり</li>
+                    <li class="partyTagli">#ワンパン</li>
+                    <li class="partyTagli">#水属性</li>
+                    <li class="partyTagli">#オート向け</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                    <li class="partyTagli">#スキルダメージ</li>
+                    <li class="partyTagli">#限定武器あり</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/03/22 21:18 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/wind_spbro_3anv-22"
+            target="_blank">
+            <div class="partyTitle">爆速崩壊域</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/wind_spbro_3anv-22.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">崩壊火 Lv70</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x3</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">崩壊水 Lv70</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x3</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">崩壊光 Lv70</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">崩壊雷 Lv70</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x2</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#オート向け</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                    <li class="partyTagli">#スキルダメージ</li>
+                    <li class="partyTagli">#速攻</li>
+                    <li class="partyTagli">#揺らぎ周回</li>
+                    <li class="partyTagli">#崩壊域周回</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="dateAdded">2023/01/04 20:10 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/psychic_yamikawa-4"
+            target="_blank">
+            <div class="partyTitle">Sec超級向けヤンデレマルボ</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/psychic_yamikawa-4.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">5200 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x5</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#マルボダメージ</li>
+                    <li class="partyTagli">#闇属性</li>
+                    <li class="partyTagli">#オート向け</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                    <li class="partyTagli">#スキルダメージ</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="dateAdded">2022/09/15 21:45 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/stella_ballot23-2"
+            target="_blank">
+            <div class="partyTitle">直接攻撃演舞(光有利)オート　ボーダー50</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/stella_ballot23-2.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">直攻演武 </div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x1</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#直撃ダメージ</li>
+                    <li class="partyTagli">#光属性</li>
+                    <li class="partyTagli">#フィーバー</li>
+                    <li class="partyTagli">#オート向け</li>
+                    <li class="partyTagli">#限定武器あり</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/19 20:44 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/wind_oracle_meteor23-3"
+            target="_blank">
+            <div class="partyTitle">オロチ用流星フィリアパ　50秒想定</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/wind_oracle_meteor23-3.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">大蛇 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x1</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#風属性</li>
+                    <li class="partyTagli">#オート向け</li>
+                    <li class="partyTagli">#スキルダメージ</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/09 18:20 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/sing_android_2halfanv-5"
+            target="_blank">
+            <div class="partyTitle">ソティエスの本気</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/sing_android_2halfanv-5.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">大蛇 シングル超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x1</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#パワフリダメージ</li>
+                    <li class="partyTagli">#直撃ダメージ</li>
+                    <li class="partyTagli">#フィーバー</li>
+                    <li class="partyTagli">#水属性</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                    <li class="partyTagli">#趣味パ</li>
+                    <li class="partyTagli">#ネタパ</li>
+                    <li class="partyTagli">#趣味パーティ</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/04 19:15 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/wind_oracle_meteor23-2"
+            target="_blank">
+            <div class="partyTitle">流星祭フィリア　オロチ</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/wind_oracle_meteor23-2.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">大蛇 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x1</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#オート向け</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/04/02 18:30 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+        <li class="partyli"><a class="partyWrap" href="https://ecrire-bot.herokuapp.com/high_priestess-54"
+            target="_blank">
+            <div class="partyTitle">妖狐</div>
+            <div class="partySubWrap">
+              <div class="partyImage"><img src="static/party/img/high_priestess-54.ja.jpg"></div>
+              <div class="partyOverview">
+                <div class="partyQuestWrap">
+                  <ul class="partyQuestList">
+                    <li class="partyQuestli">
+                      <div class="partyQuestDesc">狐 マルチ超級</div>
+                      <div class="icon--useful"></div>
+                      <div class="partyQuestUsefulCnt">x1</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="partyTagWrap">
+                  <ul class="partyTagList">
+                    <li class="partyTagli">#オート向け</li>
+                    <li class="partyTagli">#限定キャラあり</li>
+                  </ul>
+                </div>
+                <div class="partyOverviewFooter">
+                  <ul class="partyOverviewFooterList">
+                    <li class="newSign">NEW!</li>
+                    <li class="dateAdded">2023/03/26 20:43 JST</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </a></li>
+      </ul>
+      <ul class="pagination"><!-- 数字の部分 -->
+        <li class="page-item active"><a class="page-link" href="#searchResult">1</a></li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=2#searchResult">2</a></li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=3#searchResult">3</a></li>
+        <li class="page-item omit">...</li>
+        <li class="page-item omit">...</li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=114#searchResult">114</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=115#searchResult">115</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="https://ecrire-bot.herokuapp.com/?page=116#searchResult">116</a>
+        </li>
+      </ul>
+    </article>
+  </div>
+  <footer>
+    <p class="resources">参照:
+      <a href="http://eliya-bot.herokuapp.com/" target="_blank" rel="noopener">ワーフリ所有率チェッカー</a><a
+        href="https://wasuku.gamewiki.jp/" target="_blank" rel="noopener">ワーフリ攻略サイト【わーすく】</a><a
+        href="https://www.wf-calc.net/" target="_blank" rel="noopener">ワールドフリッパー攻略検証ブログ</a>
+    </p>
+    <p class="resources">ご意見ご要望:
+      <a href="https://twitter.com/WFPartyFinder" target="_blank" rel="noopener">@WFpartyFinder</a><a
+        href="https://forms.gle/EBoZR5o5d71eDvBE6" target="_blank" rel="noopener">Googleフォーム</a>
+    </p>
+    <p class="resources"><a href="https://ecrire-bot.herokuapp.com/netgraph/">パーティ的キャラクター相関図</a><a
+        href="https://ecrire-bot.herokuapp.com/donate/">ご支援のお願い</a></p>
+    <p class="resources"><a href="https://ecrire-bot.herokuapp.com/">ワーフリパーティファインダー(β) Ver3.51</a></p>
+  </footer>
+  <script>
+    var listid;
+    var lang = 'ja';
+    var msg = ''
+    window.module = {};
+  </script>
+  <script src="static/party/js/ecrire_base.js"></script>
+  <script src="static/party/js/unit_info.js"></script>
+  <script>
+    const rarity_img_src = [];
+    for (let i = 1; i < 6; i++) {
+      rarity_img_src.push('/static/root/img/sprites/rarity/star' + i + '.png')
+    };
+    var msg = ''
+  </script>
+  <script src="static/party/js/ecrire_search.js"></script>
 </body>
 </html>

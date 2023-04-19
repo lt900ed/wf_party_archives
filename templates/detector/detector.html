@@ -1,0 +1,30 @@
+{% extends 'party/base.html' %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block titletext %}パーティスクショ解析 | {{ block.super }}{% endblock %}
+{% block og_titletext %}パーティスクショ解析{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_description %}{{ block.super }}{% endblock %}
+{% block og_image %}{{ block.super }}{{ STATIC_PREFIX }}root/img/favicon/android-icon-192x192.png{% endblock %}
+{% block og_twittercard %}{{ block.super }}{% endblock %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'party/css/search.css' %}" type="text/css">
+{% endblock %}
+
+{% block content %}
+<article id="form">
+  <form class="" action="/detector/register_by_ss" method="POST" enctype="multipart/form-data">
+    {{ form.ss }}
+    {% csrf_token %}
+    <p><input type="submit" name="btn_upload" value="UPLOAD"></p>
+  </form>
+</article>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+  var msg = '{{ msg }}'
+</script>
+{% endblock %}

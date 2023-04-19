@@ -1,0 +1,91 @@
+{% extends 'party/base.html' %}
+{% load app %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block titletext %}パーティ的キャラクター相関図 | {{ block.super }}{% endblock %}
+{% block og_titletext %}パーティ的キャラクター相関図{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_description %}一緒に編成されやすいキャラクターをまとめたページです。{% endblock %}
+{% block og_image %}{{ block.super }}{{ STATIC_PREFIX }}root/img/favicon/android-icon-192x192.png{% endblock %}
+{% block og_twittercard %}{{ block.super }}{% endblock %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'netgraph/css/index.css' %}" type="text/css">
+<!-- 以下のmetaタグは推奨されているよ -->
+<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+{% endblock %}
+
+{% block content %}
+<article id="detail">
+  <section id="text">
+    <div class="markdown-body editormd-preview-container">
+      <h2 id="_1">パーティ的キャラクター相関図とは</h2>
+      <p>当サイトに投稿されたパーティに基づいて、一緒に編成されやすいキャラクター同士をつないだ相関図です。<br>
+        パーティに多く採用されている組み合わせは太く近く表示されます。<br>
+        また採用されているパーティが多いキャラほど大きく表示されます。</p>
+      <p>相関図内でピンチイン・アウト(PCはスクロール)すると拡大縮小できます。<br>
+        キャラクターをタップするとそのキャラが採用されているパーティを検索できます。<br>
+        相関図が荒ぶった時は検索条件を変更してみて下さい。</p>
+      <p>オプションで装備を表示することも可能です。装備はアビソとして採用されたパーティも含みます。<br>
+        同一パーティ内でアビソとして複数回採用されていても、採用数は1とカウントされます。<br>
+        キャラと装備両方の表示は相関図が荒ぶりやすいのでご注意ください。</p>
+        <h2 id="_2">検索条件</h2>
+      <form id="formSearch">
+        <div class="formItem">
+          <label>対象期間</label>
+          <div class="inputWrap">
+            <input id="inputStartDt" class="form-control form-date" type="date" name="start_dt" min="2021-03-02" max="2199-12-31" value="2021-03-02">
+            ～
+            <input id="inputEndDt" class="form-control form-date" type="date" name="end_dt" min="2021-03-03" max="2199-12-31" value="2021-03-02">
+          </div>
+        </div>
+        <div class="formItem">
+          <label>パーティ属性</label>
+          <div class="inputWrap">
+            <select id="selectAttribute" class="form-control">
+              {% for att in attributes %}
+              <option value="{{ att.desc_jp }}属性"{% if forloop.first %} selected{% endif %}>{{ att.desc_jp }}属性</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="formItem">
+          <label>パーティタグ</label>
+          <div class="inputWrap">
+            <select id="selectTag" class="form-control">
+              {% for t in tags %}
+              {% if forloop.first %}
+              <option value="" selected>未指定</option>
+              {% endif %}
+              <option value="{{ t.desc }}">{{ t.desc }}({{ t.p_cnt }})</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="formItem">
+          <label>キャラ / 装備</label>
+          <div class="inputWrap">
+            <select id="selectUnitType" class="form-control">
+              <option value="Char" selected>キャラのみ</option>
+              <option value="Equip">装備のみ</option>
+              <option value="Char-Equip">キャラ・装備</option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <h2 id="_3">パーティ的キャラクター相関図</h2>
+      <div id="netGraph"></div>
+    </div>
+  </section>
+</article>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<script type="text/javascript" src="{% static 'netgraph/js/netgraph.js' %}"></script>
+{% endblock %}

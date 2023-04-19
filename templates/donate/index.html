@@ -1,0 +1,113 @@
+{% extends 'party/base.html' %}
+{% load app %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+{% block titletext %}ご支援のお願い | {{ block.super }}{% endblock %}
+{% block og_titletext %}ご支援のお願い{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_description %}サイト運営継続のためのご支援をお願いするページです。{% endblock %}
+{% block og_image %}{{ block.super }}{{ STATIC_PREFIX }}root/img/favicon/android-icon-192x192.png{% endblock %}
+{% block og_twittercard %}{{ block.super }}{% endblock %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'party/css/detail.css' %}" type="text/css">
+<!-- 以下のmetaタグは推奨されているよ -->
+<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+{% endblock %}
+
+{% block content %}
+<article id="detail">
+  <section id="text">
+    <div class="markdown-body editormd-preview-container" id=memo_text>
+      <h2 id="_1">ご支援のお願い</h2>
+      <p>2021/7現在当サイトはレンタルサーバー上で運営されており、定期的な費用が発生しております。<br>
+        今後も安定した運営を続けていくため、可能な範囲でのご支援を宜しくお願い致します。</p>
+      <h2 id="_2">支援方法</h2>
+      <p>以下の方法に対応しています。</p>
+      <ul>
+        <li>Amazonギフト券</li>
+        <li>Amazon欲しいものリスト</li>
+        <li>PayPal</li>
+      </ul>
+      <h2 id="amazon">Amazonギフト券</h2>
+      <p><a href="https://www.amazon.co.jp/Amazon%E3%82%AE%E3%83%95%E3%83%88%E5%88%B8-1_JP_Email-Amazon%E3%82%AE%E3%83%95%E3%83%88%E5%88%B8-E%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%BF%E3%82%A4%E3%83%97-Amazon%E3%83%99%E3%83%BC%E3%82%B7%E3%83%83%E3%82%AF/dp/B004N3APGO/ref=lp_3131877051_1_1">EメールタイプのAmazonギフト券</a>を以下のメールアドレス宛にお送り下さい。<br>
+        金額は何円でも構いません。<br>
+        受取人：wfpartyfinder@gmail.com
+      </p>
+      <h2 id="amazon_1">Amazon欲しいものリスト</h2>
+      <p>
+        <a href="https://www.amazon.jp/hz/wishlist/ls/Z5WG23Q4NF23?ref_=wl_share">こちらで欲しいものリストを公開中です。</a><br>
+        リスト内のいずれかを頂けると幸いです。
+      </p>
+      <h2 id="pp">PayPal</h2>
+      <p>以下のボタンからお願いします。<br>
+        金額は500円固定となっています。
+        <div id="paypal-button-container"></div>
+      </p>
+      </div>
+  </section>
+</article>
+{% endblock %}
+
+{% block extrajs %}
+  <script src="{% static 'party/js/ecrire_detail.js' %}"></script>
+  <script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/raphael.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/underscore.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/sequence-diagram.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
+  <script src="{% static 'mdeditor/js/lib/jquery.flowchart.min.js' %}"></script>
+  <script>
+    $(function () {
+        editormd.markdownToHTML("memo_text", {
+            emoji           : true,
+            taskList        : true,
+            tex             : true,
+            flowChart       : true,
+            sequenceDiagram : true,
+        });
+        $(".reference-link").each(function (i,obj) {
+          console.log(obj)
+        })
+    })
+  </script>
+  <!-- PayPalのSDKの読み込み -->
+  <script src="https://www.paypal.com/sdk/js?client-id=ATFlhT_35sz_g-O9YLGtvNXSp5ofzjiY2XBKQjICvdPkSd5RI8KaGQWSOW0uZWi12zqX67RIf4RwQvGl&currency=JPY"></script>
+
+  <script>
+    paypal.Buttons({
+      style: {
+        shape: 'rect',
+        color: 'blue',
+        layout: 'horizontal',
+        label: 'paypal',
+        tagline: 'false'
+      },
+
+      createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                //料金
+                value: 500
+              },
+              //明細に表示される説明
+              description: 'ワーフリパーティファインダー運営支援(500円)',
+            }]
+          });
+      },
+      onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+              raiseNormalMsg('ご支援頂きありがとうございます！今後もワーフリパーティファインダーを宜しくお願い致します！');
+          });
+      }
+    }).render('#paypal-button-container')
+  </script>
+{% endblock %}

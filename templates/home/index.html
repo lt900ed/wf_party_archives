@@ -1,0 +1,331 @@
+{% load static %}
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width , initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ワーフリコンプチェッカー</title>
+<meta property="og:title" content="ワーフリコンプチェッカー">
+<!--
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ecrire-bot.herokuapp.com/">
+<meta property="og:image" content="https://ecrire-bot.herokuapp.com/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="57x57" href="https://ecrire-bot.herokuapp.com/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://ecrire-bot.herokuapp.com/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://ecrire-bot.herokuapp.com/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://ecrire-bot.herokuapp.com/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://ecrire-bot.herokuapp.com/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://ecrire-bot.herokuapp.com/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://ecrire-bot.herokuapp.com/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://ecrire-bot.herokuapp.com/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ecrire-bot.herokuapp.com/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://ecrire-bot.herokuapp.com/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://ecrire-bot.herokuapp.com/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://ecrire-bot.herokuapp.com/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://ecrire-bot.herokuapp.com/favicon-16x16.png">
+<link rel="manifest" href="https://ecrire-bot.herokuapp.com/manifest.json">
+-->
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<link rel="stylesheet" href="" type="text/css">
+<link rel="stylesheet" href="{% static 'home/css/reset.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'home/css/common.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'home/css/client.css' %}" type="text/css">
+<style>
+#unisons .main:after { content: "メイン";}
+#unisons ul:nth-child(1)  .main:after {content: "リーダー";}
+#unisons .sub:after {content: "サブ";}
+#unisons .weapon:after {content: "装備";}
+#unisons .soul:after {content: "アビソ";}
+</style>
+</head>
+<body class="body viewchar lang-ja">
+<div class="wrapper">
+  <ul id="listLang">
+    <li class="active"><a href="https://ecrire-bot.herokuapp.com">日本語Only</a></li>
+  </ul>
+  <div class="toolbar">
+    <ul class="btnList">
+      <li id="btnSave" class="button">保存</li>
+      <li id="btnGetShareURL" class="button">共有リンクを取得</li>
+      <li id="shareURL" class="url">
+        <input id="txtShareURL" type="text" class="txtURL">
+      </li>
+    </ul>
+    <div id="errMsg" class="message hidden"></div>
+  </div>
+  <h1 class="sitetitle"><a href="https://ecrire-bot.herokuapp.com">ワーフリコンプチェッカー</a></h1>
+  <ul id="switchUnits" class="filterList">
+    <li id="btnShowChar" class="btnSwitchUnit on" data-type="char">キャラクター</li>
+    <li id="btnShowEquip" class="btnSwitchUnit" data-type="equip">装備</li>
+    <li id="btnListView" class="">一覧表示</li>
+  </ul>
+  <article id="chars">
+    <ul id="filterCharAttribute" class="filterList">
+      <li class="btnFilter charFilter" data-filter="AttributeFire"><img src="{% static 'root/img/sprites/elements/element_red.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="AttributeWater"><img src="{% static 'root/img/sprites/elements/element_blue.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="AttributeThunder"><img src="{% static 'root/img/sprites/elements/element_yellow.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="AttributeWind"><img src="{% static 'root/img/sprites/elements/element_green.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="AttributeLight"><img src="{% static 'root/img/sprites/elements/element_white.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="AttributeDark"><img src="{% static 'root/img/sprites/elements/element_black.png' %}"></li>
+    </ul>
+    <ul id="filterCharRarity" class="filterList">
+      <li class="btnFilter charFilter" data-filter="Rarity5"><img src="{% static 'root/img/sprites/rarity/star5.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="Rarity4"><img src="{% static 'root/img/sprites/rarity/star4.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="Rarity3"><img src="{% static 'root/img/sprites/rarity/star3.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="Rarity2"><img src="{% static 'root/img/sprites/rarity/star2.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="Rarity1"><img src="{% static 'root/img/sprites/rarity/star1.png' %}"></li>
+    </ul><br>
+    <ul id="filterCharAvailability" class="filterList">
+      <li class="btnShowOwned" data-type="char">所有のみ表示</li>
+      <li class="btnShowNotOwned" data-type="char">未所有のみ表示</li>
+    </ul>
+    <ul id="filterAltArt" class="filterList">
+      <li id="btnShowRole" data-type="char">タイプ・種族</li>
+      <li class="btnFilter charFilter" data-filter="ManaBoard2">マナボード２あり</li>
+      <li id="btnAltArt">進化</li>
+    </ul><br>
+    <ul id="filterCharRole" class="filterList">
+      <li class="btnFilter charFilter" data-filter="RoleSword"><img src="{% static 'root/img/sprites/types/type_knight.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="RoleFist"><img src="{% static 'root/img/sprites/types/type_fighter.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="RoleBow"><img src="{% static 'root/img/sprites/types/type_ranged.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="RoleSupport"><img src="{% static 'root/img/sprites/types/type_supporter.png' %}"></li>
+      <li class="btnFilter charFilter" data-filter="RoleSpecial"><img src="{% static 'root/img/sprites/types/type_special.png' %}"></li>
+    </ul>
+    <ul id="filterCharRace" class="filterList">
+      <li class="btnFilter charFilter" data-filter="RaceAquatic">水棲</li>
+      <li class="btnFilter charFilter" data-filter="RaceBeast">獣</li>
+      <li class="btnFilter charFilter" data-filter="RaceDemon">魔</li>
+      <li class="btnFilter charFilter" data-filter="RaceDragon">ドラゴン</li>
+      <li class="btnFilter charFilter" data-filter="RaceHuman">人</li>
+      <li class="btnFilter charFilter" data-filter="RaceMecha">機械</li>
+      <li class="btnFilter charFilter" data-filter="RacePlant">植物</li>
+      <li class="btnFilter charFilter" data-filter="RaceSprite">精霊</li>
+      <li class="btnFilter charFilter" data-filter="RaceUndead">不死</li>
+      <li class="btnFilter charFilter" data-filter="RaceYoukai">妖</li>
+    </ul>
+    {% for char in chars %}
+      {% ifchanged char.unit.rarity %}
+        {% if char.unit.rarity < 5 %}
+        <li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li>
+      </ul>
+    </section>
+        {% endif %}
+    <section id="charRarity{{ char.unit.rarity }}">
+      <h2><img src="static/root/img/sprites/rarity/star{{ char.unit.rarity }}.png"></h2>
+      <span class="score">0/0</span>
+      <div id="btnSelectAllChar{{ char.unit.rarity }}" class="btnSelectAll button">全てチェック</div>
+      <ul class="rarity{{ char.unit.rarity }} charList unitList">
+      {% endifchanged %}
+        <li id="char-{{ char.unit.unit_id }}" class="Attribute{{ char.unit.attribute.desc }} Rarity{{ char.unit.rarity }} Role{{ char.unit.role.desc }} char unit{% for r in char.unit.race.all %} {{ r.desc }}{% endfor %}{% if char.is_manaboard2 %} Manaboard2{% endif %}">
+          <img src="static/root/img/chars/{{ char.unit.unit_id }}/square_0.png" class="mainArt">
+          <img src="static/root/img/chars/{{ char.unit.unit_id }}/square_1.png" class="altArt">
+          <div class="charInfoBlock">
+            <div class="SubName"><span>{{ char.unit.sub_name_jp }}</span></div>
+            <div class="JPName"><span>{{ char.unit.name_jp }}</span></div>
+            <div class="expandBlock">
+              <div class="Art"></div>
+              <div class="details">
+                <div class="Attribute {{ char.unit.attribute.desc }}">属性：<span></span></div>
+                <div class="Rarity Rarity{{ char.unit.rarity }}">レアリティ：<span></span></div>
+                <div class="detailsCol">
+                  <div class="LeaderBuff">リーダー特性: <span>{{ char.LeaderBuff }}</span></div>
+                  <div class="Skill">スキル: <span>{{ char.Skill }}</span></div>
+                  <div class="SkillWait">スキルウェイト: <span>{{ char.skill_wait }}</span></div>
+                </div>
+                <div class="detailsCol">
+                  <div class="h1">アビリティ</div>
+                  <div class="Ability1 charAbility"><label>アビリティ1: </label><span>{{ char.Ability1 }}</span></div>
+                  <div class="Ability2 charAbility"><label>アビリティ2: </label><span>{{ char.Ability2 }}</span></div>
+                  <div class="Ability3 charAbility"><label>アビリティ3: </label><span>{{ char.Ability3 }}</span></div>
+                  <div class="Ability4 charAbility"><label>アビリティ4: </label><span>{{ char.Ability4 }}</span></div>
+                  <div class="Ability5 charAbility"><label>アビリティ5: </label><span>{{ char.Ability5 }}</span></div>
+                  <div class="Ability6 charAbility"><label>アビリティ6: </label><span>{{ char.Ability6 }}</span></div>
+                </div>
+                <div class="footer">
+                  <div class="Stance"><span>{{ char.unit.stance.desc_jp }}</span></div>
+                  <div class="Role {{ char.unit.role.desc }}"><span>{{ char.unit.role.desc_jp }}</span></div>
+                  <div class="Gender"><span>{{ char.unit.gender.desc_jp }}</span></div>
+                  <div class="Race"><span>
+                  {% for r in char.unit.race.all|slice:":1" %}{{ r.desc }}{% endfor %}
+                  {% for r in char.unit.race.all|slice:"1:" %} / {{ r.desc }}{% endfor %}
+                  </span></div>
+                  <div class="Obtain"><span>{{ char.unit.obtain }}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+    {% endfor %}
+        <li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li>
+      </ul>
+    </section>
+    <div id="charGrandTotal">所有率<br><span class="percentage">0%</span><br><span class="score">0/242</span></div>
+  </article>
+  <article id="equips">
+    <ul id="filterEquipAttribute" class="filterList">
+      <li class="btnFilter" data-filter="AttributeFire"><img src="{% static 'root/img/sprites/elements/element_red.png' %}"></li>
+      <li class="btnFilter" data-filter="AttributeWater"><img src="{% static 'root/img/sprites/elements/element_blue.png' %}"></li>
+      <li class="btnFilter" data-filter="AttributeThunder"><img src="{% static 'root/img/sprites/elements/element_yellow.png' %}"></li>
+      <li class="btnFilter" data-filter="AttributeWind"><img src="{% static 'root/img/sprites/elements/element_green.png' %}"></li>
+      <li class="btnFilter" data-filter="AttributeLight"><img src="{% static 'root/img/sprites/elements/element_white.png' %}"></li>
+      <li class="btnFilter" data-filter="AttributeDark"><img src="{% static 'root/img/sprites/elements/element_black.png' %}"></li>
+      <li class="btnFilter" data-filter="AttributeAll"><img src="{% static 'root/img/sprites/elements/element_any.png' %}"></li>
+    </ul>
+    <ul id="filterEquipRarity" class="filterList">
+      <li class="btnFilter" data-filter="Rarity5"><img src="{% static 'root/img/sprites/rarity/star5.png' %}"></li>
+      <li class="btnFilter" data-filter="Rarity4"><img src="{% static 'root/img/sprites/rarity/star4.png' %}"></li>
+      <li class="btnFilter" data-filter="Rarity3"><img src="{% static 'root/img/sprites/rarity/star3.png' %}"></li>
+      <li class="btnFilter" data-filter="Rarity2"><img src="{% static 'root/img/sprites/rarity/star2.png' %}"></li>
+      <li class="btnFilter" data-filter="Rarity1"><img src="{% static 'root/img/sprites/rarity/star1.png' %}"></li>
+    </ul><br>
+    <ul id="filterEquipAvailability" class="filterList">
+      <li class="btnShowOwned" data-type="equip">所有のみ表示</li>
+      <li class="btnShowNotOwned" data-type="equip">未所有のみ表示</li>
+    </ul>
+    <ul id="filterEquipObtain" class="filterList">
+      <li class="btnFilter btnNoGacha" data-filter="NoGacha">ガチャなし</li>
+      <li class="btnFilter btnShowGacha" data-filter="Gacha">ガチャのみ表示</li>
+      <li id="btnViewSoul">アビリティソウル</li>
+    </ul>
+    {% for equip in equips %}
+      {% ifchanged equip.unit.rarity %}
+        {% if equip.unit.rarity < 5 %}
+        <li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li>
+      </ul>
+    </section>
+        {% endif %}
+    <section id="equipRarity{{ equip.unit.rarity }}">
+      <h2><img src="static/root/img/sprites/rarity/star{{ equip.unit.rarity }}.png"></h2>
+      <span class="score">0/0</span>
+      <div id="btnSelectAllEquip{{ equip.unit.rarity }}" class="btnSelectAll button">全てチェック</div>
+      <ul class="rarity{{ equip.unit.rarity }} equipList unitList">
+      {% endifchanged %}
+        <li id="equip-{{ equip.unit.unit_id }}" class="Attribute{{ equip.unit.attribute.desc }} Rarity{{ equip.unit.rarity }} equip unit{% if equip.Gacha %} Gacha{% else %} NoGacha{% endif %}{% if equip.AwakenLv3 %} HasAwakenLv3{% endif %}{% if equip.AwakenLv5 %} HasAwakenLv5{% endif %}">
+          <img src="static/root/img/item/equips/{{ equip.unit.unit_id }}.png" class="weaponArt">
+          <img src="static/root/img/item/equips/{{ equip.unit.unit_id }}_soul.png" class="soulArt">
+          <div class="equipInfoBlock">
+            <div class="JPName"><span>{{ equip.unit.name_jp }}</span></div>
+            <div class="expandBlock">
+              <div class="Art"></div>
+              <div class="details">
+                <div class="Attribute {{ equip.unit.attribute.desc }}"><span></span></div>
+                <div class="Rarity Rarity{{ equip.unit.rarity }}"><span></span></div>
+                <div class="MaxHP">HP: <span>{{ equip.unit.max_hp }}</span></div>
+                <div class="MaxATK">ATK: <span>{{ equip.unit.max_atk }}</span></div>
+                <div class="WeaponSkill">装備効果: <span>{{ equip.WeaponAbility }}</span></div>
+                <div class="AwakenLv3">覚醒Lv3: <span>{{ equip.AwakenLv3 }}</span></div>
+                <div class="AwakenLv5">覚醒Lv5: <span>{{ equip.AwakenLv5 }}</span></div>
+                <div class="AbilitySoul">アビリティソウル: <span>{{ equip.AbilitySoul }}</span></div>
+                <div class="Obtain">入手方法: <span>{{ equip.unit.obtain }}</span></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+        <li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li><li class="unit spookyStuff"></li>
+      </ul>
+    </section>
+    <div id="equipGrandTotal">所有率<br><span class="percentage">0%</span><br><span class="score">0/195</span></div>
+  </article>
+  <p class="resources">参照: <a href="https://www.wf-calc.net/">ワールドフリッパー攻略検証ブログ</a><br>
+    <a href="https://wfnana.com/">wfnana</a>
+  </p>
+  <div id="info" class="">
+    <div id="infoButtons" class="btnList">
+      <div id="btnCharInfo" class="button">
+        詳細
+      </div>
+      <div id="btnPlanner" class="button">
+        パーティ作成
+      </div>
+    </div>
+    <div class="infoWrapper"></div>
+    <div id="planner" class="plannerWrapper">
+      <div id="unisons">
+        <ul id="unison1" class="unison">
+        </ul>
+        <ul id="unison2" class="unison">
+        </ul>
+        <ul id="unison3" class="unison">
+        </ul>
+      </div>
+      <div id="btnUnset" class="button">X</div>
+      <ul id="plannerButtons" class="btnList">
+        <li id="btnShowSkillWait" class="button">スキルウェイト表示</li>
+        <li id="btnGetCompURL" class="button">画像リンクを取得</li>
+        <li id="compURL" class="url">
+          <input id="txtCompURL" type="text" class="txtURL">
+        </li>
+        <li id="btnRegisterParty" class="button">詳細を追加して投稿</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="charNamePlate" style="display: none; left: 0px; top: 0px;">
+    <div class="JPName"></div>
+    <div class="Obtain hidden"></div>
+  </div>
+  <div id="charInfoTemplate" class="hidden charInfoBlock">
+    <div class="SubName"><span></span></div>
+    <div class="JPName"><span></span></div>
+    <div class="expandBlock">
+      <div class="Art"></div>
+      <div class="details">
+        <div class="Attribute">属性: <span></span></div>
+        <div class="Rarity">レアリティ: <span></span></div>
+        <div class="detailsCol">
+          <div class="LeaderBuff">リーダー特性: <span></span></div>
+          <div class="Skill">スキル: <span></span></div>
+          <div class="SkillWait">スキルウェイト: <span></span></div>
+        </div>
+        <div class="detailsCol">
+          <div class="h1">アビリティ</div>
+          <div class="Ability1 charAbility"><label>アビリティ1: </label><span></span></div>
+          <div class="Ability2 charAbility"><label>アビリティ2: </label><span></span></div>
+          <div class="Ability3 charAbility"><label>アビリティ3: </label><span></span></div>
+          <div class="Ability4 charAbility"><label>アビリティ4: </label><span></span></div>
+          <div class="Ability5 charAbility"><label>アビリティ5: </label><span></span></div>
+          <div class="Ability6 charAbility"><label>アビリティ6: </label><span></span></div>
+        </div>
+        <div class="footer">
+          <div class="Stance"><span></span></div>
+          <div class="Role"><span></span></div>
+          <div class="Gender"><span></span></div>
+          <div class="Race"><span></span></div>
+          <div class="Obtain"><span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="equipInfoTemplate" class="hidden equipInfoBlock">
+    <div class="JPName"><span></span></div>
+    <div class="expandBlock">
+      <div class="Art"></div>
+      <div class="details">
+        <div class="Attribute">属性: <span></span></div>
+        <div class="Rarity">レアリティ: <span></span></div>
+        <div class="MaxHP">HP: <span></span></div>
+        <div class="MaxATK">ATK: <span></span></div>
+        <div class="WeaponSkill">装備効果: <span></span></div>
+        <div class="AwakenLv3">覚醒Lv3: <span></span></div>
+        <div class="AwakenLv5">覚醒Lv5: <span></span></div>
+        <div class="AbilitySoul">アビリティソウル: <span></span></div>
+        <div class="Obtain">入手方法: <span></span></div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var listid;
+    var lang = "ja";
+    var str_chars = "";
+    var str_equips = "";
+    {% block str_units %}{% endblock %}
+    window.module = {};
+    var tls={"GenerateImageURL":"画像リンクを取得","GenerateShareURL":"共有リンクを取得","ImageURLCopied":"画像リンクコピー済","ShareURLCopied":"共有リンクコピー済","ShareURLCopied":"共有リンクコピー済","SelectAll":"全てチェック","DeselectAll":"全て外す","Wait":"ウェイト","URLExpired":"リンクが期限切れました。","StanceAttacker": "アタッカー","StanceHealer": "ヒーラー", "StanceBalanced": "バランス", "StanceJammer": "ジャマー", "StanceSupporter": "サポーター", "StanceTank": "タンク","RaceAquatic": "水棲","RaceBeast": "獣","RaceDemon": "魔","RaceDragon": "ドラゴン","RaceHuman": "人","RaceMecha": "機械","RacePlant": "植物","RaceSprite": "精霊","RaceUndead": "不死","RaceYoukai": "妖","RoleSword": "剣士","RoleFist": "格闘","RoleBow": "射撃","RoleSupport": "補助","RoleSpecial": "特殊","AttributeFire": "火","AttributeWater": "水","AttributeThunder": "雷","AttributeWind": "風","AttributeLight": "光","AttributeDark": "闇","AttributeAll": "全","GenderMale":"男性","GenderFemale":"女性","GenderUnknown":"不明","WeaponGacha":"装備ガチャ"}
+  </script>
+  <script src="{% static 'home/js/jquery-3.js' %}"></script>
+  <script src="{% static 'home/js/js-cookie.js' %}"></script>
+  <script src="{% static 'home/js/ecrire.js' %}"></script>
+</body></html>

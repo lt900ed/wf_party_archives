@@ -1,0 +1,1269 @@
+body {
+  z-index: 1;
+  padding: 60px 0;
+  /*transition: padding 0.5s;*/
+}
+body.expanded {
+  padding-bottom: 360px;
+}
+strong {
+  font-weight: bold;
+}
+.body, .wrapper {
+  width: 100%;
+  margin: 0;
+}
+.button i {
+  vertical-align: top;
+}
+.button {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 12px;
+  text-align: center;
+  box-shadow: 0 0 1px 1px #aaa;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+}
+.button svg {
+  vertical-align: top;
+}
+.button.pressed, .button.on {
+  transition: 0.3s all;
+  color: #fff;
+  background: #6a6aea;
+}
+.button.pressed svg, .button.on svg {
+  fill: #fff;
+}
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+}
+.sitetitle {
+  font-size: 36px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+
+}
+.subtitle {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.subtitle li{
+  padding: 10px 20px;
+	display: inline;
+}
+.subtitle .active{
+	font-weight: bold;
+}
+.sitetitle a{
+	text-decoration: none;
+}
+.toolbar .btnList {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.message {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 90%;
+  text-align: center;
+  line-height: 2em;
+  max-width: 480px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.5s all;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: 1px solid #333;
+}
+.message.hidden {
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+}
+#errMsg {
+  background: rgba(237, 191, 192, 0.9);
+  color: #D20000;
+  border: 1px solid #d20000;
+}
+#listLang {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  margin: 5px;
+  padding: 0;
+  font-size: 12px;
+  line-height: 12px;
+  text-align: left;
+  box-shadow: 0 0 1px 1px #aaa;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+}
+#listLang li a {
+  padding: 10px 10px 10px 0;
+  display: none;
+  color: #999;
+  padding-left: 30px;
+}
+#listLang li.active a {
+  display: block;
+  pointer-events: none;
+  text-decoration: none;
+  color: #000;
+  background-image: url("/static/root/img/globe.svg");
+  background-size: 20px;
+  background-position: 6px 5px;
+  background-repeat: no-repeat;
+}
+#listLang.on li a {
+  display: block;
+}
+#btnGetShareURL {
+  width: 140px;
+}
+.showShareURL #btnGetShareURL {
+  display: none;
+}
+.showCompURL #btnGetCompURL {
+  display: none;
+}
+#shareURL, #compURL {
+  display: none;
+}
+.txtURL {
+  width: 108px;
+  margin: 5px 0px 5px 5px;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 12px;
+  height: 12px;
+  text-align: center;
+  border: none;
+  box-shadow: 0 0 1px 1px #aaa;
+  background: #fff;
+  border-radius: 5px 0 0 5px;
+  float: left;
+  direction: rtl;
+}
+.btnCopy {
+  line-height: 16px;
+  width: 16px;
+  padding: 8px;
+  margin: 5px 5px 5px 0;
+  border-radius: 0 5px 5px 0;
+}
+.showShareURL #shareURL, .showCompURL #compURL {
+  display: inline-block;
+  ;
+}
+#chars, #equips, #titles {
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+  display: none;
+  transition: opacity 0.3s;
+}
+#titles{
+	display: block;
+	margin-bottom: 50px;
+}
+#title{
+	padding-top: 25px;
+}
+.viewchar #chars {
+  display: block;
+}
+.viewequip #equips {
+  display: block;
+}
+#btnListView {
+  margin-right: -1px;
+}
+#chars h2, #equips h2 {
+  clear: both;
+  width: 100%;
+  margin: 20px 0 10px 5px;
+  text-align: center;
+}
+#chars h2 img, #equips h2 img {
+  width: 60px;
+}
+#chars section, #equips section, #titles section {
+  position: relative;
+}
+#chars section .score, #equips section .score,  #titles section .score {
+  position: absolute;
+  right: 85px;
+  top: 5px;
+  font-size: 11px;
+  color: #999;
+}
+.btnSelectAll {
+  padding: 5px;
+  font-size: 10px;
+  position: absolute;
+  top: -5px;
+  right: 0;
+  width: 60px;
+  transition: 0.3s all;
+}
+.btnSelectAll.on {
+  color: #000;
+  background-color: #dde;
+}
+#switchUnits {
+  text-align: center;
+  margin: 0 auto 40px;
+  display: flex;
+  width: 300px;
+}
+#switchUnits li {
+  font-size: 13px;
+  transition: 0.1s all;
+}
+#switchUnits li.on {
+  color: #fff;
+  background: #6a6aea;
+  font-weight: bold;
+  transition: none;
+}
+#charGrandTotal, #equipGrandTotal, #titleGrandTotal {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 20px;
+}
+#charGrandTotal .percentage, #equipGrandTotal .percentage, #titleGrandTotal .percentage  {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: bold;
+  color: #000;
+}
+.unitList,
+.titleList{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  transition: 0.5s all;
+  opacity: 1;
+}
+.flash {
+  transition: 0s all;
+  opacity: 0;
+}
+.unit {
+  min-width: 60px;
+  min-height: 60px;
+  border: 3px solid #fff;
+  background: #fff;
+  margin: 2px;
+  box-sizing: border-box;
+  border-radius: 9px 0px 9px 0px;
+  opacity: 0.35;
+  box-shadow: 0 0 1px 1px #aaa;
+  transition: opacity 0.3s;
+  cursor: pointer;
+  flex: 1 1 60px;
+  position: relative;
+}
+
+
+.unit.checked {
+  border: 3px solid #fff;
+  padding: 0;
+  background: #dde;
+  opacity: 1;
+}
+.title{
+  flex: 0 0 236px;
+  border: 3px solid #fff;
+  background: #fff;
+  margin: 2px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  opacity: 1;
+  box-shadow: 0 0 1px 1px #aaa;
+  transition: opacity 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+.title img{
+  max-width:230px;
+}
+.title .Kana{
+	font-size: 10px;
+	line-height: 10px;
+	opacity: 0.6;
+}
+.titleInfoBlock{
+	display: flex;
+	flex-direction: column;
+}
+.titleInfoBlock div{
+	flex: 1 1 60%;
+	padding: 5px 1%;
+    text-align: center;
+    line-height: 16px;
+
+
+}
+.titleInfoBlock .JPName{
+	color: rgba(255,255,255,0);
+	height: 0;
+    margin: -25px 0 6px 21px;
+    letter-spacing: -1px;
+    font-weight: bold;
+    font-size: 15px;
+	line-height: 16px;
+	padding: 0;
+}
+.titleInfoBlock .ENName,
+.titleInfoBlock .ZHName{
+	font-weight: bold;
+}
+.title.checked {
+  border: 3px solid #fff;
+  padding: 0;
+  background: #dde;
+  opacity: 1;
+}
+.listView .title{
+  width: 100%;
+  flex: 0 0 100%;
+}
+.listView .Kana{
+  display: none;
+}
+.listView .titleInfoBlock{
+  flex-direction: row;
+}
+.listView .titleInfoBlock div{
+	text-align: left;
+}
+.listView .title img{
+	float: left;
+}
+.listView .titleInfoBlock .JPName{
+   position: absolute;
+    left: 0;
+    top: 5px;
+    width: 230px;
+	text-align: center;
+}
+.listView .titleInfoBlock .ENName,
+.listView .titleInfoBlock .ZHName{
+	flex: 0 0 20%;
+}
+.unit.selected {
+  background: #6a6aea;
+  border: 3px solid #6a6aea;
+  opacity: 1;
+}
+.unit.spookyStuff,
+.title.spookyStuff{
+  border-top: none;
+  border-bottom: none;
+  opacity: 0 !important;
+  cursor: auto;
+  min-height: inherit;
+  padding: 0 !important;
+}
+.unit img {
+  max-width: 100%;
+  height: auto;
+}
+.altArt {
+  display: none;
+}
+.viewAlt .mainArt {
+  display: none;
+}
+.viewAlt .altArt {
+  display: block
+}
+#equips .AbilitySoul, .soulArt {
+  display: none;
+}
+.viewSoul #equips .weaponArt, .soul .weaponArt {
+  display: none;
+}
+.viewSoul #equips .soulArt, .soul .soulArt {
+  display: block;
+}
+.viewSoul #equips .WeaponSkill {
+  display: none;
+}
+.viewSoul #equips .AbilitySoul {
+  display: block;
+}
+.viewSoul #equips .soulArt{
+	background-size: contain;
+}
+.viewSoul #equips .Rarity5 .soulArt{
+	background-image: url("/static/root/img/item/rarity_soul5.png");
+}
+.viewSoul #equips .Rarity4 .soulArt{
+	background-image: url("/static/root/img/item/rarity_soul4.png");
+}
+.viewSoul #equips .Rarity3 .soulArt{
+	background-image: url("/static/root/img/item/rarity_soul3.png");
+}
+.viewSoul #equips .Rarity2 .soulArt{
+	background-image: url("/static/root/img/item/rarity_soul2.png");
+}
+.viewSoul #equips .Rarity1 .soulArt{
+	background-image: url("/static/root/img/item/rarity_soul1.png");
+}
+.viewSoul .unit.checked {
+  background: #f7f7ff;
+}
+.listView .unitList .unit.checked img.soulArt {
+  background: none;
+  box-shadow: none;
+}
+.char:before{
+  content: "";
+  width: 12px;
+  height: 12px;
+  padding: 2px;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: #fff;
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  max-width: 100%;
+  border-radius: 3px;
+}
+.viewSoul #equips .equip:before{
+  content: "";
+  width: 10px;
+  height: 10px;
+  padding: 2px;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  background-color: #fff;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  max-width: 100%;
+  border-radius:0 0 0 3px;
+}
+.filterWrapper{
+    width: 100%;
+}
+.filterList {
+  border-radius: 5px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 1px 1px #aaa;
+  display: inline-flex;
+  width: 200px;
+  margin: 0 4px 10px;
+  vertical-align: bottom;
+  transition: 0.3s all;
+}
+.filterList li {
+  width: 12px;
+  height: 12px;
+  border-left: 1px solid #aaa;
+  cursor: pointer;
+  transition: 0.3s all;
+  padding: 8px 0;
+  flex: 1 1 36px;
+  font-size: 11px;
+  line-height: 12px;
+}
+.filterList li img {
+  max-height: 12px;
+  margin: 0 auto;
+}
+.filterList li.on {
+  background: #dde;
+}
+.filterList li:first-child {
+  border: none;
+}
+#filterCharRarity, #filterEquipRarity, #filterAltArt, #filterEquipObtain{
+  width: 300px
+}
+#filterCharRole {
+  opacity: 0;
+  margin-top: -25px;
+  margin-bottom: -5px;
+  pointer-events: none;
+}
+#filterCharRace {
+  opacity: 0;
+  margin-top: -25px;
+  margin-bottom: -5px;
+  pointer-events: none;
+  width: 612px;
+}
+.showRole #filterCharAttribute, .showRole #filterCharRarity, .showRole #filterAltArt , .showRole #filterCharAvailability{
+  margin: -10px 4px 20px;
+}
+.showRole #filterCharRole, .showRole #filterCharRace {
+  opacity: 1;
+  pointer-events: auto;
+}
+#filterCharRole img {
+  background-color: #000;
+  filter: invert();
+  opacity: 0.8;
+}
+#filterCharRole .on img {
+  background-color: inherit;
+  filter: none;
+  opacity: 1;
+}
+.unit.filtered {
+  display: none;
+}
+.planner .unit {
+  opacity: 1;
+}
+.partyList {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  transition: 0.5s all;
+  opacity: 1;
+}
+.plannerWrapper {
+  max-width: 480px;
+  margin: 10px auto;
+}
+#unisons {
+  display: flex;
+  margin-bottom: 10px;
+}
+#unisons .unit {
+  min-width: inherit;
+  min-height: inherit;
+}
+#unisons .unit.checked {
+  background: #fff;
+}
+.unison {
+  flex: 1 1 33%;
+  margin: 5px 1%;
+  position: relative;
+}
+.main {
+  max-width: 60%;
+  top: 0;
+  right: 0;
+}
+.weapon {
+  max-width: 40%;
+  position: absolute;
+  top: 16px;
+  right: 0;
+}
+.sub {
+  max-width: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.soul {
+  max-width: 40%;
+  margin: 10px 0 3px;
+  box-shadow: none;
+}
+#planner .SkillWait {
+  font-size: 10px;
+  line-height: 12px;
+  padding-top: 3px;
+  display: none;
+}
+.totalSkillWait {
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  font-size: 10px;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s all;
+}
+.showSkillWait #planner .SkillWait {
+  display: block;
+}
+.showSkillWait #unisons .main:after, .showSkillWait #unisons .sub:after {
+  display: none;
+}
+.showSkillWait #planner .mainSkillWait, .showSkillWait #planner .subSkillWait, .showSkillWait #planner .totalSkillWait {
+  opacity: 1;
+}
+#unisons .char:after, #unisons .equip:after {
+  font-size: 10px;
+  font-weight: bold;
+  color: #333;
+}
+#unisons .char.selected:after, #unisons .equip.selected:after{
+  color:#eee;
+}
+#btnUnset {
+  background: #dde;
+  width: 10px;
+  height: 10px;
+  font-size: 10px;
+  line-height: 10px;
+  font-weight: bold;
+  display: none;
+  position: absolute;
+  right: -16px;
+  top: -16px;
+  z-index: 5;
+  border-radius: 50px;
+}
+.selected #btnUnset {
+  display: block;
+}
+#info {
+  position: fixed;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 1px 1px #aaa;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  height: 0;
+  text-align: center;
+  transition: 0.5s all;
+  z-index: 3;
+}
+#info.charinfo {
+  height: 300px;
+}
+#info.planner {
+  height: 280px;
+}
+#info .expandBlock {
+  opacity: 0;
+  height: 0;
+  transition: 0.5s all;
+}
+#info.charinfo .expandBlock {
+  opacity: 1;
+}
+#info .ENName {
+  margin-top: 5px;
+}
+#info .ENName,#info .ZHName, #info .JPName {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 30px;
+  display: inline-block;
+}
+#info .SubName{
+  margin-top: 10px;
+  font-size: 11px;
+  margin-bottom: -5px;
+}
+#info .plannerWrapper, #info .infoWrapper {
+  display: none;
+}
+#info.charinfo .infoWrapper {
+  display: block;
+}
+#info.planner .plannerWrapper {
+  display: block;
+}
+#infoButtons {
+  width: 100%;
+  position: absolute;
+  margin-top: -39px;
+  height: 0;
+}
+#infoButtons .button {
+  box-shadow: none;
+  border-radius: 5px 5px 0 0;
+  z-index: 1;
+  border: 1px solid #aaa;
+  background: #dde;
+  z-index: -1;
+}
+#infoButtons .button.on {
+  border-bottom: 1px solid #fff;
+  background: #fff;
+  color: #000;
+}
+.infoWrapper {
+  max-width: 920px;
+  margin: 0 auto;
+  line-height: 1.5em;
+}
+#info .Art {
+  float: left;
+  width: 84px;
+  height: 84px;
+  padding: 0 10px;
+}
+#info .AbilitySoul {
+  color: #999;
+}
+#info .Art .soulArt {
+  display: none;
+}
+#info .details {
+  text-align: left;
+  font-weight: bold;
+  overflow-y: auto;
+  max-height: 240px;
+}
+.Attribute span:before, .Role span:before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  margin: 0 4px -1px 0;
+  background-color: #fff;
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: inline-block;
+}
+.Role span:before {
+  background-color: #000;
+  filter: invert();
+  opacity: 0.8;
+}
+.char.AttributeFire:before, .Attribute.Fire span:before,.viewSoul #equips .equip.AttributeFire:before {
+  background-image: url("/static/root/img/sprites/elements/element_red.png");
+}
+.char.AttributeWater:before, .Attribute.Water span:before,.viewSoul #equips .equip.AttributeWater:before {
+  background-image: url("/static/root/img/sprites/elements/element_blue.png");
+}
+.char.AttributeWind:before, .Attribute.Wind span:before,.viewSoul #equips .equip.AttributeWind:before {
+  background-image: url("/static/root/img/sprites/elements/element_green.png");
+}
+.char.AttributeThunder:before, .Attribute.Thunder span:before,.viewSoul #equips .equip.AttributeThunder:before {
+  background-image: url("/static/root/img/sprites/elements/element_yellow.png");
+}
+.char.AttributeLight:before, .Attribute.Light span:before,.viewSoul #equips .equip.AttributeLight:before{
+  background-image: url("/static/root/img/sprites/elements/element_white.png");
+}
+.char.AttributeDark:before, .Attribute.Dark span:before,.viewSoul #equips .equip.AttributeDark:before {
+  background-image: url("/static/root/img/sprites/elements/element_black.png");
+}
+.char.AttributeAll:before, .Attribute.All span:before,.viewSoul #equips .equip.AttributeAll:before {
+  background-image: url("/static/root/img/sprites/elements/element_any.png");
+}
+#info .Rarity span {
+  font-size: 0;
+}
+.Rarity span:before {
+  content: "";
+  width: 60px;
+  height: 12px;
+  margin: 0 4px -1px 0;
+  background-color: #fff;
+  background-size: 60px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: inline-block;
+}
+.Rarity.Rarity5 span:before {
+  background-image: url("/static/root/img/sprites/rarity/star5.png");
+}
+.Rarity.Rarity4 span:before {
+  background-position: -6px;
+  background-image: url("/static/root/img/sprites/rarity/star4.png");
+}
+.Rarity.Rarity3 span:before {
+  background-position: -11px;
+  background-image: url("/static/root/img/sprites/rarity/star3.png");
+}
+.Rarity.Rarity2 span:before {
+  background-position: -16px;
+  background-image: url("/static/root/img/sprites/rarity/star2.png");
+}
+.Rarity.Rarity1 span:before {
+  background-position: -21px;
+  background-image: url("/static/root/img/sprites/rarity/star1.png");
+}
+.Role.Sword span:before {
+  background-image: url("/static/root/img/sprites/types/type_knight.png");
+}
+.Role.Fist span:before {
+  background-image: url("/static/root/img/sprites/types/type_fighter.png");
+}
+.Role.Bow span:before {
+  background-image: url("/static/root/img/sprites/types/type_ranged.png");
+}
+.Role.Support span:before {
+  background-image: url("/static/root/img/sprites/types/type_supporter.png");
+}
+.Role.Special span:before {
+  background-image: url("/static/root/img/sprites/types/type_special.png");
+}
+#info .details span {
+  font-weight: normal;
+}
+.footer {
+  font-size: normal;
+  color: #666;
+  margin-top: 20px;
+}
+.footer div {
+  display: inline-block;
+  margin-right: 10px;
+}
+#charNamePlate {
+  display: none;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  box-shadow: 0 0 1px 1px #aaa;
+  margin-top: 5px;
+  transform: translate(-50%, 0);
+  pointer-events: none;
+}
+#charNamePlate .ENName {
+  font-size: 11px;
+  line-height: 15px;
+}
+#charNamePlate .JPName {
+  font-size: 11px;
+  line-height: 15px;
+}
+#charNamePlate .Obtain {
+  font-size: 10px;
+  line-height: 15px;
+}
+.viewOwned .unit:not(.checked),
+.viewOwned .title:not(.checked),
+.viewNotOwned .unit.checked,
+.viewNotOwned .title.checked{
+  display: none;
+}
+
+.viewOwned .unit.spookyStuff ,
+.viewOwned .title.spookyStuff,
+.viewNotOwned .unit.spookyStuff ,
+.viewNotOwned .title.spookyStuff {
+  display: block;
+}
+.viewManaboard2 .unit:not(.ManaBoard2){
+  display: none;
+}
+
+.unit .charInfoBlock, .unit .equipInfoBlock {
+  display: none;
+  opacity: 0;
+  transition: 0.5s all;
+  text-align: left;
+  padding-left: 60px;
+  font-size: 11px;
+}
+.listView .unitList .unit {
+  width: 100%;
+  flex: 0 0 100%;
+  background: #fff;
+}
+.listView .unitList .charInfoBlock, .listView .unitList .equipInfoBlock {
+  display: block;
+  opacity: 1;
+}
+.listView .equipList .MaxHP, .listView .equipList .MaxATK,.listView .SubName{
+  display: none;
+}
+.unitList .details {
+  display: flex;
+  margin: 5px 0;
+}
+.unitList .details div {
+  flex: 1 1 40%;
+  padding: 0 1%;
+  font-weight: bold;
+  text-align: center;
+  line-height: 16px;
+}
+.unitList .details div.SkillWait {
+  flex: 1 1 8%;
+}
+.unitList .details div.SkillWait span {
+  text-align: center;
+}
+.equipList .details div.WeaponSkill, .equipList .details div.AbilitySoul {
+  flex: 1 1 60%;
+}
+.unitList .details div span {
+  font-weight: normal;
+  display: block;
+  text-align: left
+}
+.unitList .details div span .SkillName {
+  text-align: center;
+}
+.unitList .details div span .SkillWait {
+  text-align: center;
+}
+.unitList .details div span .SkillWait strong {
+  font-size: 11px;
+  font-size: 11px;
+}
+.unitList .details div.Rarity {
+  margin-top: 16px;
+  flex: 1 1 3%;
+}
+.unitList .details div.Rarity span:before {
+  background-position: center center;
+}
+.unitList .Attribute {
+  display: none;
+}
+.unitList .ENName,
+.unitList .ZHName,
+.lang-ja .unitList .JPName{
+  position: absolute;
+  left: 20px;
+  top: 62px;
+  line-height: 14px;
+  font-weight: bold;
+  font-size: 11px;
+}
+.equipList .ENName,
+.equipList .ZHName,
+.lang-ja .equipList .JPName{
+	left: 5px;
+}
+.equipList .details div.Attribute {
+  display: block;
+  margin-top: 16px;
+  font-weight: bold;
+  flex: 1 1 3%;
+}
+.equipList .details div span {
+  text-align: center;
+}
+
+.unitList .JPName {
+  position: absolute;
+  left: 5px;
+  top: 78px;
+  font-size: 9px;
+}
+
+.unitList .details .footer {
+  position: absolute;
+  bottom: 5px;
+  left: 74px;
+  padding: 0;
+  display: none;
+}
+.showRole .unitList .details {
+  padding-bottom: 20px;
+}
+.showRole .unitList .details .footer {
+  display: block;
+}
+.unitList .details .footer div {
+  padding: 0;
+}
+.details .charAbility{
+	overflow: hidden;
+	position: relative;
+}
+.details .charAbility label{
+	display: none;
+}
+.details .charAbility:before{
+	position: absolute;
+	left: 0;
+	top: 2px;
+	background-color: #2EC4B6;
+	border-radius: 20px;
+	font-size: 10px;
+	width: 14px;
+    height: 14px;
+    color: #fff;
+    line-height: 14px;
+	text-align: center;
+	font-weight: normal;
+
+}
+.unitList .details .charAbility:before{
+	top: 1px;
+}
+.details .Ability1:before { content:"1"	}
+.details .Ability2:before {	content:"2"	}
+.details .Ability3:before {	content:"3"	}
+.details .Ability4:before {	content:"4"	}
+.details .Ability5:before {	content:"5"	}
+.details .Ability6:before {	content:"6"	}
+.details .charAbility{
+	text-align: left;
+
+}
+.details .charAbility span{
+	display: inline-block;
+	padding-left: 18px;
+}
+.listView .unitList .char:before {
+  top: 60px;
+  left: 3px;
+}
+.listView .unit {
+  opacity: 1;
+}
+.listView .unit.checked, .listView .unit.selected {
+  opacity: 1;
+}
+.listView .unitList .unit img {
+  width: 52px;
+  height: 52px;
+  float: left;
+  margin: 5px 5px 40px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 1px 1px #aaa;
+  opacity: 0.5;
+}
+.listView .unitList .unit.checked img {
+  background: #dde;
+  opacity: 1;
+}
+.listView #charNamePlate {
+  display: none !important;
+}
+.resources{
+	font-size: 11px;
+	text-align: center;
+}
+.donation{
+	font-size: 11px;
+	text-align: center;
+	max-width: 360px;
+	margin:10px auto;
+}
+
+#paypal-button-container iframe{
+	z-index: 1!important;
+}
+@media all and (max-width: 920px) {
+
+  .wrapper {
+    width: 92%;
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+  #info .Art {
+    width: 30vw;
+    height: 30vw;
+  }
+  #info .equipInfoBlock .Art {
+    width: 12vw;
+    height: 12vw;
+    padding: 0 2vw;
+  }
+  .showRole #filterCharAttribute, .showRole #filterCharRarity, .showRole #filterAltArt {
+    margin-bottom: 10px;
+  }
+  #filterCharRole {
+    display: none;
+  }
+  .showRole #filterCharRole, .showRole #filterCharRace {
+    display: inline-flex;
+    margin-top: 0px;
+    margin-bottom: 10px;
+  }
+  .showRole #filterCharRace {
+    max-width: 100%;
+  }
+}
+@media all and (max-width: 599px) {
+  #info .Art {
+    width: 40vw;
+    height: 40vw;
+  }
+  #info .equipInfoBlock .Art {
+    width: 18vw;
+    height: 18vw;
+    padding: 0 2vw;
+  }
+  .unitList .details div {
+    flex: 1 1 100%;
+    margin-bottom: 10px;
+  }
+  .unitList .details .footer, .unitList .details .footer div {
+    margin-bottom: 0px;
+  }
+  .unitList .details {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .unitList .ENName {
+    max-width: 42px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .equipList .ENName {
+    max-width: 120px;
+    overflow: hidden;
+  }
+  .equipList .details div.Obtain {
+    flex: 1 1 60%;
+    justify-content: flex-end;
+    padding-left: 19%;
+  }
+  .unitList .details div.Rarity {
+    margin-top: 0;
+    position: absolute;
+    left: -2px;
+    top: 92px;
+  }
+  .listView .unitList .unit img {
+    margin-bottom: 54px;
+  }
+  .filterList {
+    width: 92% !important;
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  .showRole #filterAltArt {
+    margin-bottom: 10px;
+  }
+  .showRole #filterCharAttribute, .showRole #filterCharRarity, .showRole #filterAltArt, .showRole #filterAltArt {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  #filterCharRole, #filterCharRace {
+    margin-top: -20px;
+    margin-bottom: -30px;
+    ;
+  }
+  #filterCharRace {
+    flex-wrap: wrap;
+  }
+  #filterCharRace li {
+    flex: 1 1 20%;
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    margin-right: -1px;
+    margin-bottom: -1px;
+  }
+  .showRole #filterCharRole, .showRole #filterCharRace {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+	.listView .titleInfoBlock{
+		flex-direction:column;
+	}
+	.title{
+		flex: 0 0 48%;
+	}
+	.listView .title img{
+		width: 40%;
+	}
+	.title img{
+		max-width: 100%;
+	}
+    #btnGetShareURL{
+        width: 120px;
+    }
+}
+.darktheme{
+    background: #121212;
+    color: #eee;
+}
+.darktheme .filterList li{
+    border-left: 1px solid #666;
+}
+.darktheme .filterList li:first-child{
+    border-left: none;
+}
+.darktheme #listLang li.active a{
+    filter: invert(92%);
+}
+.darktheme .button{
+    background: #333;
+    box-shadow: 0 0 1px 1px #666;
+}
+.darktheme .filterList{
+    background: #333;
+    box-shadow: 0 0 1px 1px #666;
+}
+.darktheme #charGrandTotal .percentage,
+.darktheme #equipGrandTotal .percentage,
+.darktheme #titleGrandTotal .percentage,
+.darktheme a{
+    color: #fff;
+}
+.darktheme #listLang{
+    background: #333;
+}
+.darktheme #info{
+    background: #333;
+}
+.darktheme #charNamePlate{
+    background: rgba(48, 48, 48, 0.8);
+}
+.darktheme .unit.selected{
+    background: #6a6acf;
+    border: 3px solid #6a6acf;
+}
+
+
+.darktheme .filterList li.on,
+.darktheme #switchUnits li.on{
+    background: #6a6aef;
+}
+.darktheme #infoButtons .button {
+    border: 1px solid #666;
+    background: #335;
+    color: #eee;
+}
+.darktheme #infoButtons .button.on{
+    border-bottom: 1px solid #333;
+    background: #333;
+}
+.darktheme #btnUnset{
+    background: #666;
+}
+.darktheme.listView .unitList .unit{
+    background: #333;
+    border: 3px solid #999;
+}
+.darktheme .Rarity span:before{
+    background-color: rgba(0,0,0,0);
+}
+.darktheme .Attribute span:before{
+    padding: 2px; border-radius: 3px;
+}
+.darktheme .Role span:before{
+    filter:none;
+    background-color: rgba(0,0,0,0);
+}
+.darktheme #filterCharRole img{
+    filter:none;
+    background-color: rgba(0,0,0,0);
+}
+#id_party_text{
+  display: none;
+}

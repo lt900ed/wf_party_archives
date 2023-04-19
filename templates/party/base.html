@@ -1,0 +1,147 @@
+{% spaceless %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width , initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>{% block titletext %}ワーフリパーティファインダー(β){% endblock %}</title>
+<meta property="og:title" content="{% block og_titletext %}{% endblock %}">
+<meta property="og:type" content="{% block og_type %}{% endblock %}">
+<meta property="og:site_name" content="ワーフリパーティファインダー(β)">
+<meta property="og:description" content="{% block og_description %}自分の所持キャラで組めるパーティが探せるワーフリのファンサイトです。{% endblock %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{% block og_image %}https://ecrire-bot.herokuapp.com{% endblock %}">
+<meta name="twitter:site" content="@WFPartyFinder">
+<meta name="twitter:card" content="{% block og_twittercard %}summary{% endblock %}">
+
+
+<link rel="apple-touch-icon" sizes="57x57" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ STATIC_PREFIX }}root/img/favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ STATIC_PREFIX }}root/img/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ STATIC_PREFIX }}root/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ STATIC_PREFIX }}root/img/favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ STATIC_PREFIX }}root/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="{{ STATIC_PREFIX }}root/img/favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="{{ STATIC_PREFIX }}root/img/favicon/ms-icon-144x144.png">
+<link rel="stylesheet" href="{% static 'home/css/reset.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'home/css/common.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'party/css/base.css' %}" type="text/css">
+{% block extracss %}{% endblock %}
+</head>
+<body class="body">
+<header id="pageHeader">
+  <div class="logo"><h1><a href="/">ワーフリパーティファインダー(β)</a></h1></div>
+  <nav>
+    <ul id="pageNav">
+      <li id="pOpen"><a href="#registParty">パーティ登録</a></li>
+      <li id="uuOpen"><a href="#registUserUnits">手持ち登録</a></li>
+    </ul>
+  </nav>
+</header>
+<div id="registUserUnits" class="popupBase">
+  <a href="#!" class="popupUnshown"></a>
+  <div class="popupContent">
+    <div class="popWrap">
+      <div class="registDesc">
+        <p><a href="http://eliya-bot.herokuapp.com" target="_blank" rel="noopener">ワーフリ所有率チェッカー</a>さんで手持ちを登録して、「共有リンクを取得」のURLを貼り付けてください。</p>
+        <p>手持ちが更新されたらその都度このフォームから登録をお願いします。</p>
+      </div>
+      <form id="formRegistUU">
+        <input id="inputResistUU" type="url" name="url" size="45" maxlength="45" placeholder="http://eliya-bot.herokuapp.com/12345">
+        <div id="btnResistUU" class="btn ready">取得開始</div>
+      </form>
+    </div>
+  </div>
+</div>
+<div id="registParty" class="popupBase">
+  <a href="#!" id="pClose" class="popupUnshown"></a>
+  <div class="popupContent">
+    <div class="popWrap">
+      <div class="registDesc">
+        <p>編成画面のスクリーンショットを添付して下さい。解析して登録ページを表示します。</p>
+        <p>画像は解析精度向上のため保存させて頂きます。個人情報が映ってないものを添付して下さい。</p>
+        <p><a href="#registPartyByText">URLからの登録はこちら</a></p>
+      </div>
+      <form id="formRegistSS" action="/detector/register_by_ss" method="POST" enctype="multipart/form-data">
+        {{ detect_form.ss }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">解析開始</button>
+      </form>
+      <div class="ssSample"><img src="{{ STATIC_PREFIX }}detector/img/ss_sample.jpg"></div>
+    </div>
+  </div>
+</div>
+<div id="registPartyByText" class="popupBase">
+  <a href="#!" id="pClose" class="popupUnshown"></a>
+  <div class="popupContent">
+    <div class="popWrap">
+      <div class="registDesc">
+        <p><a href="http://eliya-bot.herokuapp.com" target="_blank" rel="noopener">ワーフリ所有率チェッカー</a>さんでパーティを作成して、「画像リンクを取得」のURLを貼り付けてください。</p>
+        <p>既に登録されているパーティの場合、そのパーティの詳細ページへ移動します。</p>
+        <p><a href="#registParty">スクリーンショットからの登録はこちら</a></p>
+      </div>
+      <form id="formRegistP">
+        <input id="inputResistP" type="url" name="url" size="45" maxlength="300" placeholder="https://eliya-bot.herokuapp.com/comp/a-b-c-d-e-f-g_h_i-j-l-m-n.ja.png">
+        <div id="btnResistP" class="btn ready">登録画面へ移動</div>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% block popup %}{% endblock %}
+<div class="toolbar">
+  <div id="errMsg" class="message hidden"></div>
+  <div id="normalMsg" class="message hidden"></div>
+</div>
+<div id="eolMsg">
+  <article>
+    <p>
+      ワーフリパーティファインダーは2023/4/20をもって運営を終了します。
+      詳しくは<a href="https://twitter.com/WFPartyFinder/status/1643597201824964608" target="_blank" rel="noopener">ツイッター</a>をご確認下さい。
+    </p>
+  </article>
+</div>
+<div class="wrapper">
+  {% block content %}{% endblock %}
+</div>
+<footer>
+  <p class="resources">参照:
+    <a href="http://eliya-bot.herokuapp.com/" target="_blank" rel="noopener">ワーフリ所有率チェッカー</a>
+    <a href="https://wasuku.gamewiki.jp/" target="_blank" rel="noopener">ワーフリ攻略サイト【わーすく】</a>
+    <a href="https://www.wf-calc.net/" target="_blank" rel="noopener">ワールドフリッパー攻略検証ブログ</a>
+  </p>
+  <p class="resources">ご意見ご要望:
+    <a href="https://twitter.com/WFPartyFinder" target="_blank" rel="noopener">@WFpartyFinder</a>
+    <a href="https://forms.gle/EBoZR5o5d71eDvBE6" target="_blank" rel="noopener">Googleフォーム</a>
+  </p>
+  <p class="resources">
+    <a href="{% url 'netgraph:index' %}">パーティ的キャラクター相関図</a>
+    <a href="{% url 'donate:index' %}">ご支援のお願い</a>
+  </p>
+  <p class="resources">
+    <a href="/">ワーフリパーティファインダー(β) Ver3.51</a>
+  </p>
+</footer>
+<script>
+  var listid;
+  var lang = 'ja';
+  var msg = '{{ msg }}'
+  window.module = {};
+</script>
+<script src="{% static 'home/js/jquery-3.js' %}"></script>
+<script src="{% static 'home/js/js-cookie.js' %}"></script>
+<script src="{% static 'party/js/ecrire_base.js' %}"></script>
+{% block extrajs %}{% endblock %}
+</body></html>
+{% endspaceless %}
