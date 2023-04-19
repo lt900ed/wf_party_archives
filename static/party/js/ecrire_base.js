@@ -107,7 +107,7 @@ $(document).ready(function () {
   var inputUp = isIOS ? "touchend" : "touchend mouseup";
   var w_width = $(window).width();
   var w_height = $(window).height();
-  const assetPath = '/static/root/img/';
+  const assetPath = '/wf_party_archives/static/root/img/';
 
   $('.popupUnshown').click(function (){
     if ($('#btnResistUU').hasClass('ready') && $('#btnResistP').hasClass('ready')) {

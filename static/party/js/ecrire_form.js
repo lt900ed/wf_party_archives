@@ -92,7 +92,7 @@ function ChangeMember(unit_id) {
     unit = [{
       'unit_id': 'blank',
       'attribute_desc': 'None',
-      'img_src': '/static/root/img/chars/blank/square_0.png',
+      'img_src': '/wf_party_archives/static/root/img/chars/blank/square_0.png',
       'rarity': 0
     }];
   }

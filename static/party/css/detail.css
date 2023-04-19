@@ -203,7 +203,7 @@ div.icon--useful::after{
   height: 1rem;
   width: 1rem;
   cursor: pointer;
-  background-image: url("/static/root/img/sprites/arrows/down.svg");
+  background-image: url("/wf_party_archives/static/root/img/sprites/arrows/down.svg");
   display: inline-block;
   background-size: 100%;
   vertical-align: text-bottom;

@@ -42,8 +42,8 @@ function changeTagListManage() {
 
 function updateGraph(data) {
   let container = document.getElementById('netGraph');
-  let img_path_char = '/static/root/img/chars/'
-  let img_path_equip = '/static/root/img/item/equips/'
+  let img_path_char = '/wf_party_archives/static/root/img/chars/'
+  let img_path_equip = '/wf_party_archives/static/root/img/item/equips/'
   if (data.data && data.data.length > 0) {
     // create an array with nodes
     let l_nodes = []

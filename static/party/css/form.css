@@ -172,7 +172,7 @@ select.form-control option.inactive{
   display: block;
   max-width: 480px;
   margin: 10px auto;
-  background-image: url("/static/home/img/bg.png");
+  background-image: url("/wf_party_archives/static/home/img/bg.png");
   background-repeat: no-repeat;
   background-position: center;
 }
