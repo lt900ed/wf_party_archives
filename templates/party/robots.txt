@@ -1,3 +1,3 @@
 User-agent: *
 Disallow: /?page=*
-Disallow: /static/root/img/chars/*
+Disallow: /wf_party_archives/static/root/img/chars/*
