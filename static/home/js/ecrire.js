@@ -335,7 +335,7 @@ $(document).ready(function () {
         "str_equips": getUnitList('equip'),
       })
     }).done(function(data) {
-      const shareUrl = "https://ecrire-bot.herokuapp.com/unit_control/" + data['user_units_id'] + '/'
+      const shareUrl = "/wf_party_archives/unit_control/" + data['user_units_id'] + '/'
       $("#txtShareURL").val(shareUrl);
         console.log(shareUrl);
         if (!copyToClipboard(shareUrl)){
@@ -362,7 +362,7 @@ $(document).ready(function () {
     var lngcode = '';
     if (lang!="en") lngcode+='.'+lang;
     if ($("body").is(".viewAlt")) lngcode+='.awaken'
-    const imageUrl = "https://ecrire-bot.herokuapp.com/unit_control/comp/" + units.join('-') + lngcode + ".jpg";
+    const imageUrl = "/wf_party_archives/unit_control/comp/" + units.join('-') + lngcode + ".jpg";
     $("#txtCompURL").val(imageUrl);
     if (!copyToClipboard(imageUrl)){
       $('.body').addClass("showCompURL");
