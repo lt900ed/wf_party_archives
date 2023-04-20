@@ -511,8 +511,7 @@ div.icon--twitter::after{
   padding: 0;
 }
 #eolMsg{
-  background: rgba(237, 191, 192, 0.9);
-  color: #D20000;
+  background: rgba(255, 255, 255, 0.9);
   font-weight: bold;
   font-size: 18px;
   text-align: center;
