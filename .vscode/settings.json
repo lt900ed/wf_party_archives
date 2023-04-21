@@ -17,7 +17,6 @@
     ],
     "editor.detectIndentation": false,
     "editor.insertSpaces": true,
-    "python.pythonPath": "/home/appuser/.local/share/virtualenvs/compchkroot-NhFCk-eB/bin/python",
     "[css]": {
         "editor.tabSize": 2
     },
