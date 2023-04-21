@@ -4,7 +4,6 @@ __pycache__
 db.sqlite3
 /assets
 /staticfiles
-/.vscode
 .DS_Store
 local_settings.py
 management_test.py
